@@ -1,0 +1,53 @@
+(
+    view: (
+        bpm: 89,
+        width: 640,
+        height: 480,
+        dynamic: true,
+        vsync: true,
+        screenshot: false,
+        locked_speed: false,
+        target_fps: 60,
+    ),
+
+    server: (
+        ip: "127.0.0.1",
+        port: 3000,
+        enable: false,
+    ),
+
+    inputs: {
+        "midi": (type: "Midi", name: "Mix")
+    },
+   
+    filters: {
+        "Image": (
+            inputs: [
+                "iChannel0", 
+                "iChannel1", 
+                "iChannel2"
+            ],
+            variables: {},
+            vertex_shader: [
+                "#std/default.vs.glsl",
+            ],
+            fragment_shader: [
+                "#std/header.glsl",
+                "render_chain/target.fs.glsl",
+            ]
+        )
+
+    },
+
+    render_chain: [], 
+    final_stage: (
+        name: "Image",
+        filter: "Image",
+        variables: {},
+        inputs: {
+            "iChannel0": "midi.pressed",
+            "iChannel1": "midi.toggled",
+            "iChannel2": "midi.values"
+        },
+    )
+)
