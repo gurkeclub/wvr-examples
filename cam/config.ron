@@ -58,9 +58,9 @@
         name: "target",
         filter: "target",
         inputs: {
-            "iChannel2": "Hearts",
-            "iChannel1": "Camera",
-            "iChannel0": "Forest",
+            "iChannel2": Linear("Hearts"),
+            "iChannel1": Linear("Camera"),
+            "iChannel0": Linear("Forest"),
         },
         variables: {},
         precision: U8,
