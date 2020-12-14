@@ -6,10 +6,10 @@ Running the examples can be done with the following command:
 wvr -c EXAMPLE_NAME/config.ron
 ```
 
-## Examples summary
+## Examples
 
 ### [bloom](bloom/)
-This project applies a fast bloom on a video specified in the [bloom configuration file](bloom/config.ron).
+This project applies a fast bloom on a video specified in the configuration file.
 
 ![Bloom example screenshot](bloom/screenshot.jpg)
 
