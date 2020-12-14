@@ -5,10 +5,11 @@
         height: 360,
         target_fps: 60,
         dynamic: true,
-        vsync: false,
-        screenshot: true,
+        vsync: true,
+        screenshot: false,
         screenshot_path: "output/",
         locked_speed: false,
+        fullscreen: false,
     ),
     server: (
         ip: "127.0.0.1",

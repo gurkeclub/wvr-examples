@@ -8,6 +8,8 @@
         screenshot: false,
         locked_speed: false,
         target_fps: 60,
+        screenshot_path: "output/",
+        fullscreen: false,
     ),
 
     server: (
@@ -45,9 +47,9 @@
         filter: "Image",
         variables: {},
         inputs: {
-            "iChannel0": "midi.pressed",
-            "iChannel1": "midi.toggled",
-            "iChannel2": "midi.values"
+            "iChannel0": Nearest("midi.pressed"),
+            "iChannel1": Nearest("midi.toggled"),
+            "iChannel2": Nearest("midi.values")
         },
     )
 )
