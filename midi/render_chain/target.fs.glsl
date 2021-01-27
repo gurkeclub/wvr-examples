@@ -2,7 +2,7 @@
 void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   vec2 uv = fragCoord / iResolution.xy;
 
-  vec3 color = uv.xyy;
+  vec3 color = vec3(0.0);
 
   float value = 0.0;
 

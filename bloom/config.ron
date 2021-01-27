@@ -26,7 +26,7 @@
         ),
     },
     filters: {
-        "FastBlur": (
+        "blur": (
             inputs: [
                 "iChannel0",
                 "dither",
@@ -43,7 +43,7 @@
                 "dither": Bool(false),
             },
         ),
-        "SourceImage": (
+        "threshold": (
             inputs: [
                 "iChannel0",
             ],
@@ -56,7 +56,7 @@
             ],
             variables: {},
         ),
-        "Image": (
+        "image": (
             inputs: [
                 "iChannel0",
                 "iChannel1",
@@ -75,8 +75,8 @@
     },
     render_chain: [
         (
-            name: "SourceImage",
-            filter: "SourceImage",
+            name: "Threshold",
+            filter: "threshold",
             inputs: {
                 "iChannel0": Linear("InputImage"),
             },
@@ -84,10 +84,10 @@
             precision: U8,
         ),
         (
-            name: "FastBlur",
-            filter: "FastBlur",
+            name: "Blur1",
+            filter: "blur",
             inputs: {
-                "iChannel0": Mipmaps("SourceImage"),
+                "iChannel0": Mipmaps("Threshold"),
             },
             variables: {
                 "dither": Bool(true),
@@ -95,10 +95,10 @@
             precision: U8,
         ),
         ( 
-            name: "FastBlur2",
-            filter: "FastBlur",
+            name: "Blur2",
+            filter: "blur",
             inputs: {
-                "iChannel0": Mipmaps("FastBlur"),
+                "iChannel0": Mipmaps("Blur1"),
             },
             variables: {
                 "dither": Bool(true),
@@ -106,10 +106,10 @@
             precision: U8,
         ),
         ( 
-            name: "FastBlur3",
-            filter: "FastBlur",
+            name: "Blur3",
+            filter: "blur",
             inputs: {
-                "iChannel0": Mipmaps("FastBlur2"),
+                "iChannel0": Mipmaps("Blur2"),
             },
             variables: {
                 "dither": Bool(true),
@@ -120,11 +120,10 @@
     ],
     final_stage: (
         name: "Image",
-        filter: "Image",
+        filter: "image",
         inputs: {
             "iChannel0": Linear("InputImage"),
-            "iChannel1": Linear("FastBlur3"),
-            "iChannel2": Linear("SourceImage"),
+            "iChannel1": Linear("Blur3"),
         },
         variables: {},
         precision: U8,

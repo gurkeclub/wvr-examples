@@ -16,7 +16,7 @@ This project applies a fast bloom on a video specified in the configuration file
 ### [cam](cam)
 This project captures frames from the video input specified in the configuration file and composes them with the pictures specified in the configuration.
 
-_Note 1: the default camera input will be used on Windows_
+_Note: the default camera input will be used on Windows_
 
 ### [midi](midi)
 This project captures displays the buttons pressed as well as the value of the different controls for the midi device specified in the configuration file.

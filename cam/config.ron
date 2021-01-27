@@ -6,7 +6,7 @@
         target_fps: 60,
         dynamic: true,
         vsync: true,
-        screenshot: false,
+        screenshot: true,
         screenshot_path: "output/",
         locked_speed: false,
         fullscreen: false,
@@ -17,18 +17,6 @@
         enable: false,
     ),
     inputs: {
-        "Forest": (
-            type: "Picture",
-            path: "res/forest.jpg",
-            width: 640,
-            height: 480,
-        ),
-        "Hearts": (
-            type: "Picture",
-            path: "res/Hearts.png",
-            width: 640,
-            height: 480,
-        ),
         "Camera": (
             type: "Cam",
             path: "/dev/video0",
@@ -37,30 +25,31 @@
         ),
     },
     filters: {
-        "target": (
+        "scene": (
             inputs: [
                 "iChannel0",
-                "iChannel1",
-                "iChannel2",
             ],
             vertex_shader: [
                 "#std/default.vs.glsl",
             ],
             fragment_shader: [
-                "#std/header.glsl",
-                "src/cam.fs.glsl",
+								"#std/header.glsl",
+								"src/cam.fs.glsl",
             ],
-            variables: {},
+            variables: {
+								"DOT_RADIUS": Float(12.0),
+								"BEAT_SYNC": Float(0.125),
+								"BEAT_EFFECT": Float(0.0625),
+								"BORDER_EFFECT": Float(0.25),
+						},
         ),
     },
     render_chain: [],
     final_stage: (
-        name: "target",
-        filter: "target",
+        name: "Scene",
+        filter: "scene",
         inputs: {
-            "iChannel2": Linear("Hearts"),
-            "iChannel1": Linear("Camera"),
-            "iChannel0": Linear("Forest"),
+            "iChannel0": Linear("Cam"),
         },
         variables: {},
         precision: U8,
