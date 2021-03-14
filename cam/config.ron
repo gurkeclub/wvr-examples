@@ -1,12 +1,12 @@
 (
     view: (
-        bpm: 89,
+        bpm: 120,
         width: 640,
         height: 360,
         target_fps: 60,
         dynamic: true,
         vsync: true,
-        screenshot: true,
+        screenshot: false,
         screenshot_path: "output/",
         locked_speed: false,
         fullscreen: false,
@@ -37,7 +37,7 @@
 								"src/cam.fs.glsl",
             ],
             variables: {
-								"DOT_RADIUS": Float(12.0),
+								"DOT_RADIUS": Float(24.0),
 								"BEAT_SYNC": Float(0.125),
 								"BEAT_EFFECT": Float(0.0625),
 								"BORDER_EFFECT": Float(0.25),
@@ -49,7 +49,7 @@
         name: "Scene",
         filter: "scene",
         inputs: {
-            "iChannel0": Linear("Cam"),
+            "iChannel0": Mipmaps("Cam"),
         },
         variables: {},
         precision: U8,
