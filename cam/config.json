@@ -1,0 +1,39 @@
+{
+    "bpm": 120,
+    "view": {
+        "width": 640,
+        "height": 360,
+        "fullscreen": false,
+        "target_fps": 60,
+        "dynamic": true,
+        "vsync": true,
+        "screenshot_path": "output/",
+        "screenshot": false,
+        "locked_speed": false
+    },
+    "server": {
+        "ip": "127.0.0.1",
+        "port": 3000,
+        "enable": false
+    },
+    "inputs": {
+        "Camera": {
+            "type": "Cam",
+            "path": "/dev/video0",
+            "width": 640,
+            "height": 480
+        }
+    },
+    "render_chain": [],
+    "final_stage": {
+        "name": "Scene",
+        "filter": "dotprint",
+        "inputs": {
+            "iChannel0": {
+                "Mipmaps": "Cam"
+            }
+        },
+        "variables": {},
+        "precision": "U8"
+    }
+}

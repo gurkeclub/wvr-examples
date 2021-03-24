@@ -1,0 +1,42 @@
+{
+    "bpm": 89,
+    "view": {
+        "width": 640,
+        "height": 480,
+        "dynamic": true,
+        "vsync": true,
+        "screenshot": false,
+        "locked_speed": false,
+        "target_fps": 60,
+        "screenshot_path": "output/",
+        "fullscreen": false
+    },
+    "server": {
+        "ip": "127.0.0.1",
+        "port": 3000,
+        "enable": false
+    },
+    "inputs": {
+        "midi": {
+            "type": "Midi",
+            "name": "Mix"
+        }
+    },
+    "render_chain": [],
+    "final_stage": {
+        "name": "Image",
+        "filter": "image",
+        "variables": {},
+        "inputs": {
+            "iChannel0": {
+                "Nearest": "midi.pressed"
+            },
+            "iChannel1": {
+                "Nearest": "midi.toggled"
+            },
+            "iChannel2": {
+                "Nearest": "midi.values"
+            }
+        }
+    }
+}
