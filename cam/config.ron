@@ -1,9 +1,6 @@
 (
-    libs_path: "C:\\Users\\dell\\AppData\\Local\\gurke\\wvr\\data\\libs",
-    filters_path: "C:\\Users\\dell\\AppData\\Local\\gurke\\wvr\\data\\filters",
-    path: "C:\\Users\\dell\\AppData\\Local\\gurke\\wvr\\data\\projects\\wvr-examples\\cam",
+    bpm: 120,
     view: (
-        bpm: 120,
         width: 640,
         height: 360,
         fullscreen: false,
@@ -27,33 +24,10 @@
             height: 480,
         ),
     },
-    filters: {
-        "scene": (
-            path: None,
-            inputs: [
-                "iChannel0",
-            ],
-            vertex_shader: [
-                "#std/default.vs.glsl",
-            ],
-            fragment_shader: [
-                "#std/header.glsl",
-                "#std/misc.glsl",
-                "src/cam.fs.glsl",
-            ],
-            variables: {
-                "BEAT_EFFECT": Float(0),
-                "BEAT_SYNC": Float(0.125),
-                "POSTERIZATION_LEVELS": Float(16),
-                "BORDER_EFFECT": Float(0),
-                "DOT_RADIUS": Float(15),
-            },
-        ),
-    },
     render_chain: [],
     final_stage: (
         name: "Scene",
-        filter: "scene",
+        filter: "dotprint",
         inputs: {
             "iChannel0": Mipmaps("Cam"),
         },

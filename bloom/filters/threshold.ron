@@ -1,0 +1,13 @@
+(
+    inputs: [
+        "iChannel0",
+    ],
+    vertex_shader: [
+        "#std/default.vs.glsl",
+    ],
+    fragment_shader: [
+        "#std/header.glsl",
+        "src/threshold.fs.glsl",
+    ],
+    variables: {},
+)

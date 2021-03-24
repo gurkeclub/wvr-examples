@@ -1,6 +1,6 @@
 (
+    bpm: 89,
     view: (
-        bpm: 80,
         width: 640,
         height: 480,
         target_fps: 60,
@@ -23,54 +23,6 @@
             width: 1366,
             height: 768,
             speed: (Fps: 23.98),
-        ),
-    },
-    filters: {
-        "blur": (
-            inputs: [
-                "iChannel0",
-                "dither",
-            ],
-            vertex_shader: [
-                "#std/default.vs.glsl",
-            ],
-            fragment_shader: [
-                "#std/header.glsl",
-                "#std/noise.glsl",
-                "src/blur_fast.fs.glsl",
-            ],
-            variables: {
-                "dither": Bool(false),
-            },
-        ),
-        "threshold": (
-            inputs: [
-                "iChannel0",
-            ],
-            vertex_shader: [
-                "#std/default.vs.glsl",
-            ],
-            fragment_shader: [
-                "#std/header.glsl",
-                "src/threshold.fs.glsl",
-            ],
-            variables: {},
-        ),
-        "image": (
-            inputs: [
-                "iChannel0",
-                "iChannel1",
-                "iChannel2",
-            ],
-            vertex_shader: [
-                "#std/default.vs.glsl",
-            ],
-            fragment_shader: [
-                "#std/header.glsl",
-                "#std/noise.glsl",
-                "src/target.fs.glsl",
-            ],
-            variables: {},
         ),
     },
     render_chain: [
@@ -120,7 +72,7 @@
     ],
     final_stage: (
         name: "Image",
-        filter: "image",
+        filter: "final_stage",
         inputs: {
             "iChannel0": Linear("InputImage"),
             "iChannel1": Linear("Blur3"),
