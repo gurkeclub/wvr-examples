@@ -1,8 +1,8 @@
 {
     "bpm": 120,
     "view": {
-        "width": 640,
-        "height": 360,
+        "width": 960,
+        "height": 640,
         "fullscreen": false,
         "target_fps": 60,
         "dynamic": true,
