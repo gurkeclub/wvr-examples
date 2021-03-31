@@ -1,0 +1,102 @@
+{
+  "bpm": 89.0,
+  "view": {
+    "width": 960,
+    "height": 640,
+    "fullscreen": false,
+    "target_fps": 60.0,
+    "dynamic": true,
+    "vsync": true,
+    "screenshot_path": "output/",
+    "screenshot": false,
+    "locked_speed": false
+  },
+  "server": {
+    "ip": "127.0.0.1",
+    "port": 3000,
+    "enable": false
+  },
+  "inputs": {
+    "InputImage": {
+      "type": "Video",
+      "path": "res/water_cut.mp4",
+      "width": 960,
+      "height": 640,
+      "speed": {
+        "Fps": 50.0
+      }
+    }
+  },
+  "render_chain": [
+    {
+      "name": "Blur3",
+      "filter": "blur",
+      "inputs": {
+        "iChannel0": {
+          "Mipmaps": "Blur2"
+        }
+      },
+      "variables": {
+        "dither": {
+          "Bool": true
+        }
+      },
+      "precision": "U8"
+    },
+    {
+      "name": "Blur1",
+      "filter": "blur",
+      "inputs": {
+        "iChannel0": {
+          "Mipmaps": "Threshold"
+        }
+      },
+      "variables": {
+        "dither": {
+          "Bool": true
+        }
+      },
+      "precision": "U8"
+    },
+    {
+      "name": "Threshold",
+      "filter": "threshold",
+      "inputs": {
+        "iChannel0": {
+          "Linear": "InputImage"
+        }
+      },
+      "variables": {},
+      "precision": "U8"
+    },
+    {
+      "name": "Blur2",
+      "filter": "blur",
+      "inputs": {
+        "iChannel0": {
+          "Mipmaps": "Blur1"
+        }
+      },
+      "variables": {
+        "dither": {
+          "Bool": true
+        }
+      },
+      "precision": "U8"
+    }
+  ],
+  "final_stage": {
+    "name": "Image",
+    "filter": "final_stage",
+    "inputs": {
+      "iChannel0": {
+        "Linear": "InputImage"
+      },
+      "iChannel1": {
+        "Linear": "Blur3"
+      }
+    },
+    "variables": {},
+    "precision": "U8"
+  }
+}
