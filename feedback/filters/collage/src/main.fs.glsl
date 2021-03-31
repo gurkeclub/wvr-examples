@@ -20,6 +20,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
 
   float sky_mask = max(0.25, max(forest_col.r, forest_col.g) + 0.05);
   sky_mask = step(sky_mask, forest_col.b);
+  sky_mask = 1.0 - step(0.1, forest_col.g);
 
   forest_col = hsv2rgb(vec3(length(forest_col), rgb2hsv(forest_col).gb));
   col = mix(forest_col, sky_col, sky_mask);
