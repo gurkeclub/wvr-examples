@@ -1,0 +1,58 @@
+{
+    "inputs": [
+        "iChannel0",
+        "iChannel1",
+        "iChannel2"
+    ],
+    "vertex_shader": [
+        "std/default.vs.glsl"
+    ],
+    "fragment_shader": [
+        "std/header.glsl",
+        "std/noise.glsl",
+        "std/misc.glsl",
+        "main.fs.glsl"
+    ],
+    "variables": {
+        "SHOW_MASK": {
+            "Bool": true
+        },
+        "FEEDBACK_OFFSET": {
+            "Float2": [
+                0.0,
+                1.0
+            ]
+        },
+        "FEEDBACK_DECAY": {
+            "Float": 0.01
+        },
+        "PALETTE_A": {
+            "Float3": [
+                0.5,
+                0.5,
+                0.5
+            ]
+        },
+        "PALETTE_B": {
+            "Float3": [
+                0.5,
+                0.5,
+                0.5
+            ]
+        },
+        "PALETTE_C": {
+            "Float3": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "PALETTE_D": {
+            "Float3": [
+                0.00,
+                0.33,
+                0.67
+            ]
+        }
+    }
+}

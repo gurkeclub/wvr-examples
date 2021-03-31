@@ -1,0 +1,23 @@
+{
+    "inputs": [
+        "iChannel0",
+        "iChannel1"
+    ],
+    "vertex_shader": [
+        "std/default.vs.glsl"
+    ],
+    "fragment_shader": [
+        "std/header.glsl",
+        "std/noise.glsl",
+        "std/misc.glsl",
+        "main.fs.glsl"
+    ],
+    "variables": {
+        "ANT_SIZE": {
+            "Float": 3.0
+        },
+        "ANT_COUNT": {
+            "Int": 200
+        }
+    }
+}

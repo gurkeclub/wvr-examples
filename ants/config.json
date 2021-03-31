@@ -1,0 +1,188 @@
+{
+  "bpm": 89.0,
+  "view": {
+    "width": 960,
+    "height": 540,
+    "fullscreen": false,
+    "target_fps": 60.0,
+    "dynamic": true,
+    "vsync": true,
+    "screenshot_path": "output/",
+    "screenshot": false,
+    "locked_speed": false
+  },
+  "server": {
+    "ip": "127.0.0.1",
+    "port": 3000,
+    "enable": false
+  },
+  "inputs": {
+    "Camera #1": {
+      "type": "Cam",
+      "path": "/dev/video0",
+      "width": 640,
+      "height": 540
+    }
+  },
+  "render_chain": [
+    {
+      "name": "Threshold",
+      "filter": "threshold",
+      "inputs": {
+        "iChannel0": {
+          "Linear": "Camera #1"
+        }
+      },
+      "variables": {
+        "THRESHOLD": {
+          "Float": 0.5
+        },
+        "THRESHOLD_SLOPE": {
+          "Float": 0.1
+        },
+        "MIRROR": {
+          "Bool": true
+        },
+        "THRESHOLD_REVERSE": {
+          "Bool": false
+        }
+      },
+      "precision": "F32"
+    },
+    {
+      "name": "Ants",
+      "filter": "ants",
+      "inputs": {
+        "iChannel0": {
+          "Linear": "Ants"
+        },
+        "iChannel2": {
+          "Linear": "Pheromons"
+        },
+        "iChannel1": {
+          "Linear": "Threshold"
+        }
+      },
+      "variables": {
+        "ANT_EXPLORATION": {
+          "Float": 0.25
+        },
+        "PHEROMON_DECAY": {
+          "Float": 0.01
+        },
+        "ANT_GROUPING": {
+          "Float": 0.25
+        }
+      },
+      "precision": "F32"
+    },
+    {
+      "name": "EmitPheromons",
+      "filter": "emit_pheromons",
+      "inputs": {
+        "iChannel1": {
+          "Linear": "Threshold"
+        },
+        "iChannel0": {
+          "Nearest": "Ants"
+        }
+      },
+      "variables": {
+        "ANT_COUNT": {
+          "Int": 400
+        }
+      },
+      "precision": "F32"
+    },
+    {
+      "name": "Pheromons",
+      "filter": "diffuse_pheromon",
+      "inputs": {
+        "iChannel0": {
+          "Linear": "EmitPheromons"
+        },
+        "iChannel1": {
+          "Linear": "Pheromons"
+        }
+      },
+      "variables": {
+        "DIFFUSE_DECAY": {
+          "Float": 0.001
+        },
+        "INTEGRATE_DECAY": {
+          "Float": 0.01
+        }
+      },
+      "precision": "F32"
+    },
+    {
+      "name": "Feedback",
+      "filter": "render",
+      "inputs": {
+        "iChannel1": {
+          "Linear": "Threshold"
+        },
+        "iChannel2": {
+          "Linear": "Feedback"
+        },
+        "iChannel0": {
+          "Linear": "Pheromons"
+        }
+      },
+      "variables": {
+        "PALETTE_D": {
+          "Float3": [
+            0.0,
+            0.1,
+            0.2
+          ]
+        },
+        "PALETTE_A": {
+          "Float3": [
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        "FEEDBACK_OFFSET": {
+          "Float2": [
+            0.0,
+            0.5
+          ]
+        },
+        "SHOW_MASK": {
+          "Bool": true
+        },
+        "PALETTE_C": {
+          "Float3": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "PALETTE_B": {
+          "Float3": [
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        "FEEDBACK_DECAY": {
+          "Float": 0.1
+        }
+      },
+      "precision": "F32"
+    }
+  ],
+  "final_stage": {
+    "name": "Image",
+    "filter": "target",
+    "inputs": {
+      "iChannel0": {
+        "Linear": "Feedback"
+      }
+    },
+    "variables": {},
+    "precision": "F32"
+  }
+}

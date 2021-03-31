@@ -1,0 +1,28 @@
+{
+    "inputs": [
+        "iChannel0"
+    ],
+    "vertex_shader": [
+        "std/default.vs.glsl"
+    ],
+    "fragment_shader": [
+        "std/header.glsl",
+        "std/noise.glsl",
+        "std/misc.glsl",
+        "main.fs.glsl"
+    ],
+    "variables": {
+        "MIRROR": {
+            "Bool": false
+        },
+        "THRESHOLD_REVERSE": {
+            "Bool": false
+        },
+        "THRESHOLD": {
+            "Float": 0.9
+        },
+        "THRESHOLD_SLOPE": {
+            "Float": 0.1
+        }
+    }
+}
