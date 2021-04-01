@@ -35,6 +35,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 
     if (SHOW_MASK) {
         col = mix(col, 1.0 - col, interest_mask);
+        col = mix(col, vec3(0.0, 1.0, 0.0), texture(iChannel0, uv).b);
+
     } else {
         col = mix(col, feedback_color, 1.0 - interest_mask);
     }

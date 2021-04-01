@@ -33,7 +33,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     ant_speed += 0.1 * ant_on_peak;
     ant_speed -= 0.1 * ant_pheromons;
     ant_speed = clamp(ant_speed, 0.0, 1.0);
-    ant_speed = mix(ant_speed, 10.0, smoothstep(-PHEROMON_DECAY, 0.0, - ant_pheromons));
+    ant_speed = mix(ant_speed, 1.0, smoothstep(-PHEROMON_DECAY, 0.0, - ant_pheromons));
     ant_speed *= ANT_SIZE;
     
     vec2 stream_direction = vec2(0.0);

@@ -23,5 +23,5 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     
     pheromons_integration = clamp(pheromons_integration, 0.0, 8.0);
     
-    fragColor = vec4(pheromons_diffusion, pheromons_integration, 0.0,1.0);
+    fragColor = vec4(pheromons_diffusion, pheromons_integration, texture(iChannel0, uv).g,1.0);
 }
