@@ -11,7 +11,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ){
 
     vec3 color = texture(iChannel0, uv).rgb;
     
-    float is_peak = smoothstep(0.0, THRESHOLD_SLOPE, length(color) - THRESHOLD);
+    float is_peak = smoothstep(-THRESHOLD_SLOPE * 0.5, THRESHOLD_SLOPE * 0.5, length(color) - THRESHOLD);
     
     if (THRESHOLD_REVERSE) {
         is_peak = 1.0 - is_peak;

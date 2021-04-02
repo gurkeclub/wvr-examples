@@ -13,15 +13,16 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
         }
     }
     pheromons_diffusion /= 9.0;
-    pheromons_diffusion = max(texture(iChannel0, uv).r, pheromons_diffusion - DIFFUSE_DECAY);
+    float pixel_pheromons = texture(iChannel0, uv).r;
+    pheromons_diffusion = max(pixel_pheromons, pheromons_diffusion- DIFFUSE_DECAY);
     
     
     
-    pheromons_diffusion = clamp(pheromons_diffusion - DIFFUSE_DECAY, 0.0, 8.0);
+    pheromons_diffusion = clamp(pheromons_diffusion, 0.0, 2.0);
     
-    pheromons_integration = max(pheromons_integration - INTEGRATE_DECAY, pheromons_diffusion) ;
+    pheromons_integration = mix(pheromons_diffusion, pheromons_integration + pheromons_diffusion, 1.0 - INTEGRATE_DECAY) ;
     
-    pheromons_integration = clamp(pheromons_integration, 0.0, 8.0);
+    pheromons_integration = clamp(pheromons_integration, 0.0, 2.0);
     
     fragColor = vec4(pheromons_diffusion, pheromons_integration, texture(iChannel0, uv).g,1.0);
 }

@@ -14,7 +14,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ){
     uv = (uv * 2.0 - 1.0) * iResolution.xy / iResolution.yy;
 
     uv = fract(0.5 + uv * DOT_DENSITY / 2.0) * 2.0 - 1.0; 
-    is_peak = max(is_peak, step(0.0, 0.5 - distance(uv, vec2(0.0 , 0.0))));
+    is_peak = max(is_peak, step(0.0, 0.25 - distance(uv, vec2(0.0 , 0.0))));
     //is_peak = max(is_peak, step(0.0, 0.1 - distance(uv, vec2(-0.5, 0.0))));
     
     

@@ -23,8 +23,9 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // Normalized pixel coordinates (from 0 to 1)
     vec2 uv = fragCoord/iResolution.xy;
 
-    float pixel_pheromons = texture(iChannel0, uv).g / 1.0;
+    float pixel_pheromons = clamp(texture(iChannel0, uv).g / 2.0, 0.0, 1.0);
     pixel_pheromons = pow(abs(pixel_pheromons *2.0 - 1.0), COLOR_CONTRAST) * sign(pixel_pheromons - 0.5) / 2.0 + 0.5;
+    pixel_pheromons = pow(pixel_pheromons, COLOR_CONTRAST);
     float interest_mask = texture(iChannel1, uv).g;
     vec3 feedback_color = texture(iChannel2, uv + (pixel_pheromons + 1.0) * FEEDBACK_OFFSET / iResolution.xy).rgb;
     feedback_color -= FEEDBACK_DECAY;
@@ -40,10 +41,10 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 
     if (SHOW_MASK) {
         col = mix(col, 1.0 - col, interest_mask);
-        if (SHOW_ANTS) {
-            col = mix(col, vec3(0.0, 1.0, 0.0), texture(iChannel0, uv).b);
-        }
 
+    }
+    if (SHOW_ANTS) {
+        col = mix(col, vec3(0.0, 1.0, 0.0), texture(iChannel0, uv).b);
     }
     if (SHOW_FEEDBACK) {
         col = mix(col, feedback_color,interest_mask);
