@@ -9,5 +9,9 @@
         "std/misc.glsl",
         "main.fs.glsl"
     ],
-    "variables": {}
+    "variables": {
+        "DOT_DENSITY": {
+            "Float": 2.0
+        }
+    }
 }

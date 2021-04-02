@@ -1,7 +1,11 @@
 uniform bool SHOW_MASK;
+uniform bool SHOW_FEEDBACK;
+uniform bool SHOW_ANTS;
 
 uniform vec2 FEEDBACK_OFFSET;
 uniform float FEEDBACK_DECAY;
+
+uniform float COLOR_CONTRAST;
 
 uniform vec3 PALETTE_A;
 uniform vec3 PALETTE_B;
@@ -19,7 +23,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // Normalized pixel coordinates (from 0 to 1)
     vec2 uv = fragCoord/iResolution.xy;
 
-    float pixel_pheromons = texture(iChannel0, uv).r;
+    float pixel_pheromons = texture(iChannel0, uv).g / 1.0;
+    pixel_pheromons = pow(abs(pixel_pheromons *2.0 - 1.0), COLOR_CONTRAST) * sign(pixel_pheromons - 0.5) / 2.0 + 0.5;
     float interest_mask = texture(iChannel1, uv).g;
     vec3 feedback_color = texture(iChannel2, uv + (pixel_pheromons + 1.0) * FEEDBACK_OFFSET / iResolution.xy).rgb;
     feedback_color -= FEEDBACK_DECAY;
@@ -31,17 +36,21 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 	);
 
     float direction_as_hue = atan(stream_direction.y, stream_direction.x) / (2.0 * PI);
-    vec3 col = palette(pixel_pheromons, PALETTE_A, PALETTE_B, PALETTE_C, PALETTE_D);
+    vec3 col = palette(clamp(pixel_pheromons, 0.0, 1.0), PALETTE_A, PALETTE_B, PALETTE_C, PALETTE_D);
 
     if (SHOW_MASK) {
         col = mix(col, 1.0 - col, interest_mask);
-        col = mix(col, vec3(0.0, 1.0, 0.0), texture(iChannel0, uv).b);
+        if (SHOW_ANTS) {
+            col = mix(col, vec3(0.0, 1.0, 0.0), texture(iChannel0, uv).b);
+        }
 
-    } else {
-        col = mix(col, feedback_color, 1.0 - interest_mask);
+    }
+    if (SHOW_FEEDBACK) {
+        col = mix(col, feedback_color,interest_mask);
     }
 
     col = clamp(col, vec3(0.0), vec3(1.0));
+
 
 
 

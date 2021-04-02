@@ -15,7 +15,16 @@
     ],
     "variables": {
         "SHOW_MASK": {
-            "Bool": true
+            "Bool": false
+        },
+        "SHOW_ANTS": {
+            "Bool": false
+        },
+        "SHOW_FEEDBACK": {
+            "Bool": false
+        },
+        "COLOR_CONTRAST": {
+            "Float": 1.0
         },
         "FEEDBACK_OFFSET": {
             "Float2": [
