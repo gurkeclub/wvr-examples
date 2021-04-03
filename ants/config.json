@@ -17,12 +17,6 @@
     "enable": false
   },
   "inputs": {
-    "Camera #1": {
-      "type": "Cam",
-      "path": "/dev/video0",
-      "width": 640,
-      "height": 540
-    }
   },
   "render_chain": [
     {
