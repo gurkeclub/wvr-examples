@@ -13,11 +13,29 @@
         "main.fs.glsl"
     ],
     "variables": {
-        "ANT_SIZE": {
-            "Float": 3.0
-        },
-        "ANT_COUNT": {
-            "Int": 200
-        }
+        "ANT_SIZE": [
+            {
+                "Float": 3.0
+            },
+            {
+                "FloatRange": [
+                    1.0,
+                    100.0,
+                    1.0
+                ]
+            }
+        ],
+        "ANT_COUNT": [
+            {
+                "Int": 200
+            },
+            {
+                "IntRange": [
+                    1,
+                    10000,
+                    1
+                ]
+            }
+        ]
     }
 }

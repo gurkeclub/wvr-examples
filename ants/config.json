@@ -1,11 +1,11 @@
 {
   "bpm": 89.0,
   "view": {
-    "width": 960,
-    "height": 540,
-    "fullscreen": false,
+    "width": 612,
+    "height": 412,
+    "fullscreen": true,
     "target_fps": 60.0,
-    "dynamic": true,
+    "dynamic": false,
     "vsync": false,
     "screenshot_path": "output/",
     "screenshot": false,
@@ -16,16 +16,15 @@
     "port": 3000,
     "enable": false
   },
-  "inputs": {
-  },
+  "inputs": {},
   "render_chain": [
     {
-      "name": "Gen Pattern",
+      "name": "Emit Food",
       "filter": "patterns",
       "inputs": {},
       "variables": {
         "DOT_DENSITY": {
-          "Float": 3.0
+          "Float": 2.0
         }
       },
       "precision": "F32"
@@ -37,25 +36,25 @@
         "iChannel0": {
           "Linear": "Ants"
         },
-        "iChannel1": {
-          "Linear": "Gen Pattern"
-        },
         "iChannel2": {
           "Linear": "Diffuse Pheromons"
+        },
+        "iChannel1": {
+          "Linear": "Emit Food"
         }
       },
       "variables": {
         "ANT_GROUPING": {
-          "Float": 0.396
-        },
-        "PHEROMON_DECAY": {
-          "Float": 0.002
-        },
-        "ANT_SIZE": {
-          "Float": 5.0
+          "Float": 0.441
         },
         "ANT_EXPLORATION": {
-          "Float": 0.192
+          "Float": 0.25
+        },
+        "PHEROMON_DECAY": {
+          "Float": 0.017
+        },
+        "ANT_SIZE": {
+          "Float": 3.0
         }
       },
       "precision": "F32"
@@ -68,15 +67,15 @@
           "Nearest": "Ants"
         },
         "iChannel1": {
-          "Linear": "Gen Pattern"
+          "Linear": "Emit Food"
         }
       },
       "variables": {
         "ANT_COUNT": {
-          "Int": 200
+          "Int": 638
         },
         "ANT_SIZE": {
-          "Float": 5.0
+          "Float": 2.0
         }
       },
       "precision": "F32"
@@ -94,10 +93,10 @@
       },
       "variables": {
         "INTEGRATE_DECAY": {
-          "Float": 0.598
+          "Float": 0.528
         },
         "DIFFUSE_DECAY": {
-          "Float": 0.003
+          "Float": 0.00101
         }
       },
       "precision": "F32"
@@ -106,37 +105,25 @@
       "name": "Render",
       "filter": "render",
       "inputs": {
-        "iChannel0": {
-          "Linear": "Diffuse Pheromons"
-        },
         "iChannel1": {
-          "Linear": "Gen Pattern"
+          "Linear": "Emit Food"
         },
         "iChannel2": {
           "Linear": "Render"
+        },
+        "iChannel0": {
+          "Linear": "Diffuse Pheromons"
         }
       },
       "variables": {
-        "FEEDBACK_DECAY": {
-          "Float": 0.05
-        },
-        "FEEDBACK_OFFSET": {
-          "Float2": [
-            0.0,
-            0.5
-          ]
-        },
-        "SHOW_MASK": {
-          "Bool": false
-        },
         "SHOW_ANTS": {
           "Bool": false
         },
-        "PALETTE_B": {
+        "PALETTE_A": {
           "Float3": [
             0.5,
-            0.5,
-            0.5
+            0.502,
+            0.502
           ]
         },
         "PALETTE_C": {
@@ -146,25 +133,37 @@
             1.0
           ]
         },
-        "PALETTE_A": {
-          "Float3": [
-            0.5,
-            0.5,
-            0.5
-          ]
+        "SHOW_MASK": {
+          "Bool": false
         },
         "COLOR_CONTRAST": {
-          "Float": 1.5
+          "Float": 1.0
         },
-        "PALETTE_D": {
-          "Float3": [
+        "FEEDBACK_DECAY": {
+          "Float": 0.082
+        },
+        "FEEDBACK_OFFSET": {
+          "Float2": [
             0.0,
-            0.1,
-            0.2
+            1.0
+          ]
+        },
+        "PALETTE_B": {
+          "Float3": [
+            0.497,
+            0.505,
+            0.511
           ]
         },
         "SHOW_FEEDBACK": {
           "Bool": false
+        },
+        "PALETTE_D": {
+          "Float3": [
+            0.0,
+            0.331,
+            0.666
+          ]
         }
       },
       "precision": "F32"
@@ -172,7 +171,7 @@
   ],
   "final_stage": {
     "name": "Image",
-    "filter": "target",
+    "filter": "copy_input",
     "inputs": {
       "iChannel0": {
         "Linear": "Render"

@@ -10,8 +10,17 @@
         "main.fs.glsl"
     ],
     "variables": {
-        "DOT_DENSITY": {
-            "Float": 2.0
-        }
+        "DOT_DENSITY": [
+            {
+                "Float": 2.0
+            },
+            {
+                "FloatRange": [
+                    1.0,
+                    10.0,
+                    0.005
+                ]
+            }
+        ]
     }
 }

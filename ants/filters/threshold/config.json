@@ -12,17 +12,41 @@
         "main.fs.glsl"
     ],
     "variables": {
-        "MIRROR": {
-            "Bool": false
-        },
-        "THRESHOLD_REVERSE": {
-            "Bool": false
-        },
-        "THRESHOLD": {
-            "Float": 0.9
-        },
-        "THRESHOLD_SLOPE": {
-            "Float": 0.1
-        }
+        "MIRROR": [
+            {
+                "Bool": false
+            },
+            "None"
+        ],
+        "THRESHOLD_REVERSE": [
+            {
+                "Bool": false
+            },
+            "None"
+        ],
+        "THRESHOLD": [
+            {
+                "Float": 0.9
+            },
+            {
+                "FloatRange": [
+                    0.0,
+                    0.9,
+                    0.0001
+                ]
+            }
+        ],
+        "THRESHOLD_SLOPE": [
+            {
+                "Float": 0.1
+            },
+            {
+                "FloatRange": [
+                    0.0,
+                    0.9,
+                    0.0001
+                ]
+            }
+        ]
     }
 }

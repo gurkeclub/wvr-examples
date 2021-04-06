@@ -13,11 +13,29 @@
         "main.fs.glsl"
     ],
     "variables": {
-        "DIFFUSE_DECAY": {
-            "Float": 0.0001
-        },
-        "INTEGRATE_DECAY": {
-            "Float": 0.0005
-        }
+        "DIFFUSE_DECAY": [
+            {
+                "Float": 0.0001
+            },
+            {
+                "FloatRange": [
+                    0.0,
+                    0.01,
+                    0.00001
+                ]
+            }
+        ],
+        "INTEGRATE_DECAY": [
+            {
+                "Float": 0.3
+            },
+            {
+                "FloatRange": [
+                    0.0,
+                    1.0,
+                    0.0001
+                ]
+            }
+        ]
     }
 }

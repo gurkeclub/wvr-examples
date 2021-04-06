@@ -28,10 +28,10 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     
     float ant_on_peak = texture(iChannel1, ant_pos).r;
     
-    float ant_speed = 0.5;
-    ant_speed -= 0.25 * ant_on_peak;
-    ant_speed += 0.1 * ant_pheromons;
-    ant_speed = clamp(ant_speed, 0.0, 1.0);
+    float ant_speed = 1.0;
+    //ant_speed -= 0.25 * ant_on_peak;
+    ant_speed += 1.0 * ant_pheromons;
+    ant_speed = clamp(ant_speed, 0.0, 2.0);
     //ant_speed = mix(ant_speed, 1.0, smoothstep(-PHEROMON_DECAY, 0.0, - ant_pheromons));
     ant_speed *= ANT_SIZE;
     
@@ -56,7 +56,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     stream_direction = normalize(stream_direction);
 
     float grouping_factor = 1.0;
-    grouping_factor *= 1.0 - ant_on_peak;
+    grouping_factor *= clamp(1.0 - ant_on_peak, 0.0, 1.0);
     grouping_factor *=  smoothstep(PHEROMON_DECAY, PHEROMON_DECAY * 4.0, sniffed_pheromons);
     grouping_factor *=  1.0 - smoothstep(1.5, 2.0, sniffed_pheromons);
     grouping_factor *= ANT_GROUPING;

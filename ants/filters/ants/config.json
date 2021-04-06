@@ -14,17 +14,53 @@
         "main.fs.glsl"
     ],
     "variables": {
-        "PHEROMON_DECAY": {
-            "Float": 0.001
-        },
-        "ANT_SIZE": {
-            "Float": 3.0
-        },
-        "ANT_EXPLORATION": {
-            "Float": 0.25
-        },
-        "ANT_GROUPING": {
-            "Float": 0.1
-        }
+        "PHEROMON_DECAY": [
+            {
+                "Float": 0.001
+            },
+            {
+                "FloatRange": [
+                    0.0,
+                    0.1,
+                    0.00001
+                ]
+            }
+        ],
+        "ANT_SIZE": [
+            {
+                "Float": 3.0
+            },
+            {
+                "FloatRange": [
+                    1.0,
+                    100.0,
+                    1.0
+                ]
+            }
+        ],
+        "ANT_EXPLORATION": [
+            {
+                "Float": 0.25
+            },
+            {
+                "FloatRange": [
+                    0.0,
+                    1.0,
+                    0.0001
+                ]
+            }
+        ],
+        "ANT_GROUPING": [
+            {
+                "Float": 0.25
+            },
+            {
+                "FloatRange": [
+                    0.0,
+                    1.0,
+                    0.0001
+                ]
+            }
+        ]
     }
 }
