@@ -2,6 +2,7 @@ uniform float PHEROMON_DECAY;
 uniform float ANT_SIZE;
 uniform float ANT_EXPLORATION;
 uniform float ANT_GROUPING;
+uniform float ANT_REINFORCEMENT;
 
 
 
@@ -28,11 +29,11 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     
     float ant_on_peak = texture(iChannel1, ant_pos).r;
     
-    float ant_speed = 1.0;
+    float ant_speed = 0.5;
     //ant_speed -= 0.25 * ant_on_peak;
-    ant_speed += 1.0 * ant_pheromons;
-    ant_speed = clamp(ant_speed, 0.0, 2.0);
-    //ant_speed = mix(ant_speed, 1.0, smoothstep(-PHEROMON_DECAY, 0.0, - ant_pheromons));
+    ant_speed += 0.25 * ant_pheromons;
+    ant_speed = clamp(ant_speed, 0.0, 1.0);
+    ant_speed = mix(ant_speed, 2.0, smoothstep(-PHEROMON_DECAY, 0.0, - ant_pheromons));
     ant_speed *= ANT_SIZE;
     
     vec2 stream_direction = vec2(0.0);
@@ -57,8 +58,9 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
 
     float grouping_factor = 1.0;
     grouping_factor *= clamp(1.0 - ant_on_peak, 0.0, 1.0);
-    grouping_factor *=  smoothstep(PHEROMON_DECAY, PHEROMON_DECAY * 4.0, sniffed_pheromons);
-    grouping_factor *=  1.0 - smoothstep(1.5, 2.0, sniffed_pheromons);
+    grouping_factor *= smoothstep(PHEROMON_DECAY, PHEROMON_DECAY * 4.0, sniffed_pheromons);
+    grouping_factor *= 1.0 - smoothstep(1.5, 2.0, sniffed_pheromons);
+    grouping_factor *= 1.0 - ANT_EXPLORATION * smoothstep(1.5, 2.0, ant_pheromons);
     grouping_factor *= ANT_GROUPING;
     
     float exploration_factor = 1.0;
@@ -70,18 +72,19 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     float exploration = PI * 2.0 * (rand(uv + vec2(iTime  / 100.0, uv.x + uv.y)) * 2.0 - 1.0);
     vec2 exploration_cart = vec2(cos(exploration), sin(exploration)); 
 
-    ant_direction_cart = normalize(mix(ant_direction_cart, exploration_cart, exploration_factor));
-    if (sniffed_pheromons > PHEROMON_DECAY) {
+    if (stream_strength > PHEROMON_DECAY) {
         ant_direction_cart = normalize(mix(ant_direction_cart, stream_direction, grouping_factor));
     }
+    ant_direction_cart = normalize(mix(ant_direction_cart, exploration_cart, exploration_factor));
+    
 
     ant_direction = atan(ant_direction_cart.y, ant_direction_cart.x);
 
 
     
     ant_pos = ant_pos + ant_speed * vec2(cos(ant_direction), sin(ant_direction)) / iResolution.xy;
-    ant_pheromons -= PHEROMON_DECAY * smoothstep(-2.0, -1.0, -sniffed_pheromons);
-    ant_pheromons += PHEROMON_DECAY * ant_on_peak * 10.0;
+    ant_pheromons += PHEROMON_DECAY * max(ant_on_peak * 10.0, ANT_REINFORCEMENT * smoothstep(-2.0, -1.0, -sniffed_pheromons));
+    ant_pheromons -= PHEROMON_DECAY;
     //ant_pheromons *= 1.0 - step(-16.0 / iResolution.x, abs(ant_pos.x - 0.5) - 0.5);
     //ant_pheromons *= 1.0 - step(-16.0 / iResolution.y, abs(ant_pos.y - 0.5) - 0.5);
     ant_pheromons = clamp(ant_pheromons, 0.0, 2.0);

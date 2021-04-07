@@ -40,11 +40,11 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     vec3 col = palette(clamp(pixel_pheromons, 0.0, 1.0), PALETTE_A, PALETTE_B, PALETTE_C, PALETTE_D);
 
     if (SHOW_MASK) {
-        col = mix(col, 1.0 - col, interest_mask);
+        col = mix(col, vec3(interest_mask), interest_mask);
 
     }
     if (SHOW_ANTS) {
-        col = mix(col, vec3(0.0, 1.0, 0.0), texture(iChannel0, uv).b);
+        col = mix(col, vec3(0.0, 0.0, 0.0), texture(iChannel0, uv).b);
     }
     if (SHOW_FEEDBACK) {
         col = mix(col, feedback_color,interest_mask);

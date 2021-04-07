@@ -7,7 +7,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     float pixel_pheromons = 0.0;
     float pixel_ants = 0.0;
     
-    float size = ANT_SIZE / iResolution.x;
+    float size = ANT_SIZE / iResolution.y;
     size *= size;
     vec2 distance_factor = iResolution.xy / iResolution.yy;
     for (int i = 0; i < ANT_COUNT; i++) {

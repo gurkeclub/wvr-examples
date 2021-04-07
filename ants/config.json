@@ -1,12 +1,12 @@
 {
   "bpm": 89.0,
   "view": {
-    "width": 612,
-    "height": 412,
-    "fullscreen": true,
+    "width": 480,
+    "height": 480,
+    "fullscreen": false,
     "target_fps": 60.0,
-    "dynamic": false,
-    "vsync": false,
+    "dynamic": true,
+    "vsync": true,
     "screenshot_path": "output/",
     "screenshot": false,
     "locked_speed": false
@@ -25,6 +25,9 @@
       "variables": {
         "DOT_DENSITY": {
           "Float": 2.0
+        },
+        "DOT_SIZE": {
+          "Float": 0.254
         }
       },
       "precision": "F32"
@@ -36,25 +39,28 @@
         "iChannel0": {
           "Linear": "Ants"
         },
-        "iChannel2": {
-          "Linear": "Diffuse Pheromons"
-        },
         "iChannel1": {
           "Linear": "Emit Food"
+        },
+        "iChannel2": {
+          "Linear": "Diffuse Pheromons"
         }
       },
       "variables": {
         "ANT_GROUPING": {
-          "Float": 0.441
-        },
-        "ANT_EXPLORATION": {
-          "Float": 0.25
+          "Float": 0.4176
         },
         "PHEROMON_DECAY": {
-          "Float": 0.017
+          "Float": 0.03588
+        },
+        "ANT_EXPLORATION": {
+          "Float": 0.1193
         },
         "ANT_SIZE": {
           "Float": 3.0
+        },
+        "ANT_REINFORCEMENT": {
+          "Float": 0.4886
         }
       },
       "precision": "F32"
@@ -63,19 +69,19 @@
       "name": "Emit Pheromons",
       "filter": "emit_pheromons",
       "inputs": {
-        "iChannel0": {
-          "Nearest": "Ants"
-        },
         "iChannel1": {
           "Linear": "Emit Food"
+        },
+        "iChannel0": {
+          "Nearest": "Ants"
         }
       },
       "variables": {
         "ANT_COUNT": {
-          "Int": 638
+          "Int": 651
         },
         "ANT_SIZE": {
-          "Float": 2.0
+          "Float": 3.0
         }
       },
       "precision": "F32"
@@ -92,11 +98,11 @@
         }
       },
       "variables": {
-        "INTEGRATE_DECAY": {
-          "Float": 0.528
-        },
         "DIFFUSE_DECAY": {
-          "Float": 0.00101
+          "Float": 0.00432
+        },
+        "INTEGRATE_DECAY": {
+          "Float": 0.4949
         }
       },
       "precision": "F32"
@@ -105,19 +111,31 @@
       "name": "Render",
       "filter": "render",
       "inputs": {
+        "iChannel0": {
+          "Linear": "Diffuse Pheromons"
+        },
         "iChannel1": {
           "Linear": "Emit Food"
         },
         "iChannel2": {
           "Linear": "Render"
-        },
-        "iChannel0": {
-          "Linear": "Diffuse Pheromons"
         }
       },
       "variables": {
         "SHOW_ANTS": {
           "Bool": false
+        },
+        "SHOW_MASK": {
+          "Bool": false
+        },
+        "SHOW_FEEDBACK": {
+          "Bool": false
+        },
+        "FEEDBACK_OFFSET": {
+          "Float2": [
+            0.0,
+            1.0
+          ]
         },
         "PALETTE_A": {
           "Float3": [
@@ -126,27 +144,8 @@
             0.502
           ]
         },
-        "PALETTE_C": {
-          "Float3": [
-            1.0,
-            1.0,
-            1.0
-          ]
-        },
-        "SHOW_MASK": {
-          "Bool": false
-        },
         "COLOR_CONTRAST": {
           "Float": 1.0
-        },
-        "FEEDBACK_DECAY": {
-          "Float": 0.082
-        },
-        "FEEDBACK_OFFSET": {
-          "Float2": [
-            0.0,
-            1.0
-          ]
         },
         "PALETTE_B": {
           "Float3": [
@@ -155,14 +154,21 @@
             0.511
           ]
         },
-        "SHOW_FEEDBACK": {
-          "Bool": false
-        },
         "PALETTE_D": {
           "Float3": [
             0.0,
             0.331,
             0.666
+          ]
+        },
+        "FEEDBACK_DECAY": {
+          "Float": 0.082
+        },
+        "PALETTE_C": {
+          "Float3": [
+            1.0,
+            1.0,
+            1.0
           ]
         }
       },

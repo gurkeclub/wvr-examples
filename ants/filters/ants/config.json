@@ -57,6 +57,18 @@
             {
                 "FloatRange": [
                     0.0,
+                    0.5,
+                    0.0001
+                ]
+            }
+        ],
+        "ANT_REINFORCEMENT": [
+            {
+                "Float": 0.90
+            },
+            {
+                "FloatRange": [
+                    0.0,
                     1.0,
                     0.0001
                 ]
