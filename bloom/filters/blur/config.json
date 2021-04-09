@@ -1,4 +1,12 @@
 {
+    "mode": {
+        "Rectangle": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+        ]
+    },
     "inputs": [
         "iChannel0",
         "dither"
@@ -12,8 +20,11 @@
         "main.fs.glsl"
     ],
     "variables": {
-        "dither": {
-            "Bool": false
-        }
+        "dither": [
+            {
+                "Bool": false
+            },
+            "None"
+        ]
     }
 }

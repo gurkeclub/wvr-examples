@@ -37,6 +37,14 @@
         {
             "name": "Collage",
             "filter": "collage",
+            "filter_mode_params": {
+                "Rectangle": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    1.0
+                ]
+            },
             "inputs": {
                 "iChannel0": {
                     "Linear": "forest"
@@ -54,7 +62,15 @@
     ],
     "final_stage": {
         "name": "Target",
-        "filter": "target",
+        "filter": "copy_input",
+        "filter_mode_params": {
+            "Rectangle": [
+                0.0,
+                0.0,
+                1.0,
+                1.0
+            ]
+        },
         "inputs": {
             "iChannel0": {
                 "Linear": "Collage"

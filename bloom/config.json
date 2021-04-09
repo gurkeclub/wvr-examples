@@ -31,6 +31,14 @@
         {
             "name": "Threshold",
             "filter": "threshold",
+            "filter_mode_params": {
+                "Rectangle": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    1.0
+                ]
+            },
             "inputs": {
                 "iChannel0": {
                     "Linear": "InputImage"
@@ -42,6 +50,14 @@
         {
             "name": "Blur1",
             "filter": "blur",
+            "filter_mode_params": {
+                "Rectangle": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    1.0
+                ]
+            },
             "inputs": {
                 "iChannel0": {
                     "Mipmaps": "Threshold"
@@ -57,6 +73,14 @@
         {
             "name": "Blur2",
             "filter": "blur",
+            "filter_mode_params": {
+                "Rectangle": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    1.0
+                ]
+            },
             "inputs": {
                 "iChannel0": {
                     "Mipmaps": "Blur1"
@@ -72,6 +96,14 @@
         {
             "name": "Blur3",
             "filter": "blur",
+            "filter_mode_params": {
+                "Rectangle": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    1.0
+                ]
+            },
             "inputs": {
                 "iChannel0": {
                     "Mipmaps": "Blur2"
@@ -83,21 +115,48 @@
                 }
             },
             "precision": "U8"
+        },
+        {
+            "name": "Compose",
+            "filter": "final_stage",
+            "filter_mode_params": {
+                "Rectangle": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "inputs": {
+                "iChannel0": {
+                    "Linear": "InputImage"
+                },
+                "iChannel1": {
+                    "Linear": "Blur3"
+                }
+            },
+            "variables": {},
+            "precision": "U8",
+            "mipmapped": false
         }
     ],
     "final_stage": {
-        "name": "Image",
-        "filter": "final_stage",
+        "name": "Target",
+        "filter": "copy_input",
+        "filter_mode_params": {
+            "Rectangle": [
+                0.0,
+                0.0,
+                1.0,
+                1.0
+            ]
+        },
         "inputs": {
             "iChannel0": {
-                "Linear": "InputImage"
-            },
-            "iChannel1": {
-                "Linear": "Blur3"
+                "Linear": "Compose"
             }
         },
         "variables": {},
-        "precision": "U8",
-        "mipmapped": false
+        "precision": "U8"
     }
 }

@@ -1,4 +1,12 @@
 {
+    "mode": {
+        "Rectangle": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+        ]
+    },
     "inputs": [
         "iChannel0"
     ],
@@ -11,20 +19,65 @@
         "main.fs.glsl"
     ],
     "variables": {
-        "BEAT_EFFECT": {
-            "Float": 0
-        },
-        "BEAT_SYNC": {
-            "Float": 0.125
-        },
-        "POSTERIZATION_LEVELS": {
-            "Float": 16
-        },
-        "BORDER_EFFECT": {
-            "Float": 0
-        },
-        "DOT_RADIUS": {
-            "Float": 15
-        }
+        "BEAT_EFFECT": [
+            {
+                "Float": 0
+            },
+            {
+                "FloatRange": [
+                    0.0,
+                    1.0,
+                    0.0001
+                ]
+            }
+        ],
+        "BEAT_SYNC": [
+            {
+                "Float": 0.125
+            },
+            {
+                "FloatRange": [
+                    0.0,
+                    1.0,
+                    0.0001
+                ]
+            }
+        ],
+        "POSTERIZATION_LEVELS": [
+            {
+                "Float": 16
+            },
+            {
+                "FloatRange": [
+                    0.0,
+                    256.0,
+                    1.0
+                ]
+            }
+        ],
+        "BORDER_EFFECT": [
+            {
+                "Float": 0
+            },
+            {
+                "FloatRange": [
+                    0.0,
+                    1.0,
+                    0.0001
+                ]
+            }
+        ],
+        "DOT_RADIUS": [
+            {
+                "Float": 15
+            },
+            {
+                "FloatRange": [
+                    0.0,
+                    1000.0,
+                    1.0
+                ]
+            }
+        ]
     }
 }

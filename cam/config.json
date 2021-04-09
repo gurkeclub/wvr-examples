@@ -24,13 +24,41 @@
             "height": 480
         }
     },
-    "render_chain": [],
+    "render_chain": [
+        {
+            "name": "Effect",
+            "filter": "dotprint",
+            "filter_mode_params": {
+                "Rectangle": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "inputs": {
+                "iChannel0": {
+                    "Mipmaps": "Camera"
+                }
+            },
+            "variables": {},
+            "precision": "U8"
+        }
+    ],
     "final_stage": {
-        "name": "Scene",
-        "filter": "dotprint",
+        "name": "Target",
+        "filter": "copy_input",
+        "filter_mode_params": {
+            "Rectangle": [
+                0.0,
+                0.0,
+                1.0,
+                1.0
+            ]
+        },
         "inputs": {
             "iChannel0": {
-                "Mipmaps": "Cam"
+                "Linear": "Effect"
             }
         },
         "variables": {},

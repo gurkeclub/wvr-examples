@@ -19,23 +19,50 @@
     "inputs": {
         "midi": {
             "type": "Midi",
-            "name": "Mix"
+            "name": "*"
         }
     },
-    "render_chain": [],
+    "render_chain": [
+        {
+            "name": "Midi Debug",
+            "filter": "image",
+            "filter_mode_params": {
+                "Rectangle": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "variables": {},
+            "inputs": {
+                "iChannel0": {
+                    "Nearest": "midi.pressed"
+                },
+                "iChannel1": {
+                    "Nearest": "midi.toggled"
+                },
+                "iChannel2": {
+                    "Nearest": "midi.values"
+                }
+            }
+        }
+    ],
     "final_stage": {
-        "name": "Image",
-        "filter": "image",
+        "name": "Target",
+        "filter": "copy_input",
+        "filter_mode_params": {
+            "Rectangle": [
+                0.0,
+                0.0,
+                1.0,
+                1.0
+            ]
+        },
         "variables": {},
         "inputs": {
             "iChannel0": {
-                "Nearest": "midi.pressed"
-            },
-            "iChannel1": {
-                "Nearest": "midi.toggled"
-            },
-            "iChannel2": {
-                "Nearest": "midi.values"
+                "Linear": "Midi Debug"
             }
         }
     }
