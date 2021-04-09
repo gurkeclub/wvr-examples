@@ -1,4 +1,12 @@
 {
+    "mode": {
+        "Rectangle": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+        ]
+    },
     "inputs": [
         "iChannel0",
         "iChannel1"
@@ -20,7 +28,7 @@
             {
                 "FloatRange": [
                     0.0,
-                    0.01,
+                    0.1,
                     0.00001
                 ]
             }

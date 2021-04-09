@@ -39,12 +39,12 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     float direction_as_hue = atan(stream_direction.y, stream_direction.x) / (2.0 * PI);
     vec3 col = palette(clamp(pixel_pheromons, 0.0, 1.0), PALETTE_A, PALETTE_B, PALETTE_C, PALETTE_D);
 
-    if (SHOW_MASK) {
+    if (SHOW_MASK ) {
         col = mix(col, vec3(interest_mask), interest_mask);
 
     }
     if (SHOW_ANTS) {
-        col = mix(col, vec3(0.0, 0.0, 0.0), texture(iChannel0, uv).b);
+        col = mix(col, vec3(0.0, 0.0, 0.0), texture(iChannel0, uv).b * 0.1);
     }
     if (SHOW_FEEDBACK) {
         col = mix(col, feedback_color,interest_mask);

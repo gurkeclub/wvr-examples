@@ -83,7 +83,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
 
     
     ant_pos = ant_pos + ant_speed * vec2(cos(ant_direction), sin(ant_direction)) / iResolution.xy;
-    ant_pheromons += PHEROMON_DECAY * max(ant_on_peak * 10.0, ANT_REINFORCEMENT * smoothstep(-2.0, -1.0, -sniffed_pheromons));
+    ant_pheromons += PHEROMON_DECAY * max(ant_on_peak * 100.0, ANT_REINFORCEMENT * smoothstep(-2.0, -1.0, -sniffed_pheromons));
     ant_pheromons -= PHEROMON_DECAY;
     //ant_pheromons *= 1.0 - step(-16.0 / iResolution.x, abs(ant_pos.x - 0.5) - 0.5);
     //ant_pheromons *= 1.0 - step(-16.0 / iResolution.y, abs(ant_pos.y - 0.5) - 0.5);

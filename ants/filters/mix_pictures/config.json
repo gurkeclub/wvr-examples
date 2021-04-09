@@ -1,4 +1,12 @@
 {
+    "mode": {
+        "Rectangle": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+        ]
+    },
     "inputs": [
         "picture_a",
         "picture_b",

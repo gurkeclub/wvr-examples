@@ -4,7 +4,7 @@ uniform float INTEGRATE_DECAY;
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     vec2 uv = fragCoord/iResolution.xy;
 
-    float pixel_pheromons = texture(iChannel0, uv).r;
+    float pixel_pheromons = clamp(texture(iChannel0, uv).r, 0.0, 1.0);
     float pheromons_integration = texture(iChannel1, uv).g;
     
     float pheromons_diffusion = 0.0;

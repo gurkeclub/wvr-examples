@@ -1,7 +1,11 @@
 uniform bool MIRROR;
-uniform bool THRESHOLD_REVERSE;
+
 uniform float THRESHOLD;
 uniform float THRESHOLD_SLOPE;
+uniform bool THRESHOLD_REVERSE;
+
+uniform bool CHROMA;
+uniform vec3 CHROMA_FACTORS;
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord ){
     vec2 uv = fragCoord/iResolution.xy;
@@ -11,7 +15,13 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ){
 
     vec3 color = texture(iChannel0, uv).rgb;
     
-    float is_peak = smoothstep(-THRESHOLD_SLOPE * 0.5, THRESHOLD_SLOPE * 0.5, length(color) - THRESHOLD);
+    float is_peak = 0.0;
+    if (CHROMA) {
+        is_peak += dot(CHROMA_FACTORS, color);
+    } else {
+        is_peak = length(color);
+    }
+    is_peak = smoothstep(-THRESHOLD_SLOPE * 0.5, THRESHOLD_SLOPE * 0.5, is_peak - THRESHOLD);
     
     if (THRESHOLD_REVERSE) {
         is_peak = 1.0 - is_peak;
