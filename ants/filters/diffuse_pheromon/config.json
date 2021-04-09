@@ -8,8 +8,8 @@
         ]
     },
     "inputs": [
-        "iChannel0",
-        "iChannel1"
+        "pheromons",
+        "emitted_pheromons"
     ],
     "vertex_shader": [
         "std/default.vs.glsl"

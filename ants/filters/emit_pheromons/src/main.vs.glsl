@@ -2,8 +2,10 @@
 uniform mat4 matrix;
 
 uniform vec3 iResolution;
-uniform sampler2D iChannel0;
+
 uniform float ANT_SIZE;
+
+uniform sampler2D ants;
 
 in vec2 position;
 in vec2 tex_coords;
@@ -17,7 +19,7 @@ void main() {
     
     int i = instance_id % int(iResolution.x);
     int j = instance_id / int(iResolution.x);
-    vec4 ant_info = texelFetch(iChannel0, ivec2(i, j), 0).rgba;
+    vec4 ant_info = texelFetch(ants, ivec2(i, j), 0).rgba;
     ant_pheromons = ant_info.z;
 
     vec2 p = position;

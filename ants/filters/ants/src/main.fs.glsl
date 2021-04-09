@@ -4,12 +4,15 @@ uniform float ANT_EXPLORATION;
 uniform float ANT_GROUPING;
 uniform float ANT_REINFORCEMENT;
 
+uniform sampler2D ants;
+uniform sampler2D pheromons;
+uniform sampler2D food;
 
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     vec2 uv = fragCoord/iResolution.xy;
     
-    vec4 ant_info = texture(iChannel0, uv).rgba;
+    vec4 ant_info = texture(ants, uv).rgba;
     
     
     if (iFrame == 0) {
@@ -27,7 +30,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     float ant_direction = ant_info.w;
     ant_direction = mod(ant_direction, 2.0 * PI);
     
-    float ant_on_peak = texture(iChannel1, ant_pos).r;
+    float ant_on_peak = texture(food, ant_pos).r;
     
     float ant_speed = 0.5;
     //ant_speed -= 0.25 * ant_on_peak;
@@ -45,11 +48,11 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     vec2 ant_nose = ant_pos;
     ant_nose += 4.0 * ANT_SIZE * ant_direction_cart / iResolution.xy;
     
-    sniffed_pheromons = texture(iChannel2, ant_nose).g;
+    sniffed_pheromons = texture(pheromons, ant_nose).g;
     
     stream_direction = vec2(
-    	texture(iChannel2, ant_nose + vec2(1.0, 0.0) / iResolution.xy).g - texture(iChannel2, ant_nose - vec2(1.0, 0.0) / iResolution.xy).g,
-    	texture(iChannel2, ant_nose + vec2(0.0, 1.0) / iResolution.xy).g - texture(iChannel2, ant_nose - vec2(0.0, 1.0) / iResolution.xy).g
+    	texture(pheromons, ant_nose + vec2(1.0, 0.0) / iResolution.xy).g - texture(pheromons, ant_nose - vec2(1.0, 0.0) / iResolution.xy).g,
+    	texture(pheromons, ant_nose + vec2(0.0, 1.0) / iResolution.xy).g - texture(pheromons, ant_nose - vec2(0.0, 1.0) / iResolution.xy).g
 	);
 	
     

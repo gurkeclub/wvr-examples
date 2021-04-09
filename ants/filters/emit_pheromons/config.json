@@ -3,7 +3,7 @@
         "Particles": 10000
     },
     "inputs": [
-        "iChannel0"
+        "ants"
     ],
     "vertex_shader": [
         "main.vs.glsl"

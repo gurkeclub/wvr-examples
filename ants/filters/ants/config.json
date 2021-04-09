@@ -8,9 +8,9 @@
         ]
     },
     "inputs": [
-        "iChannel0",
-        "iChannel1",
-        "iChannel2"
+        "ants",
+        "pheromons",
+        "food"
     ],
     "vertex_shader": [
         "std/default.vs.glsl"

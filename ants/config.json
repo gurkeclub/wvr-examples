@@ -52,13 +52,13 @@
         ]
       },
       "inputs": {
-        "iChannel0": {
+        "ants": {
           "Linear": "Ants"
         },
-        "iChannel2": {
+        "pheromons": {
           "Linear": "Diffuse Pheromons"
         },
-        "iChannel1": {
+        "food": {
           "Linear": "Emit Food"
         }
       },
@@ -88,7 +88,7 @@
         "Particles": 10000
       },
       "inputs": {
-        "iChannel0": {
+        "ants": {
           "Nearest": "Ants"
         }
       },
@@ -111,10 +111,10 @@
         ]
       },
       "inputs": {
-        "iChannel1": {
+        "pheromons": {
           "Linear": "Diffuse Pheromons"
         },
-        "iChannel0": {
+        "emitted_pheromons": {
           "Linear": "Emit Pheromons"
         }
       },
@@ -140,13 +140,13 @@
         ]
       },
       "inputs": {
-        "iChannel0": {
+        "pheromons": {
           "Linear": "Diffuse Pheromons"
         },
-        "iChannel1": {
+        "food": {
           "Linear": "Emit Food"
         },
-        "iChannel2": {
+        "feedback": {
           "Linear": "Render"
         }
       },

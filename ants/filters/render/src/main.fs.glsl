@@ -12,6 +12,10 @@ uniform vec3 PALETTE_B;
 uniform vec3 PALETTE_C;
 uniform vec3 PALETTE_D;
 
+uniform sampler2D pheromons;
+uniform sampler2D food;
+uniform sampler2D feedback;
+
 vec3 palette( in float t, in vec3 a, in vec3 b, in vec3 c, in vec3 d )
 {
     return a + b*cos( 6.28318*(c*t+d) );
@@ -23,17 +27,17 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // Normalized pixel coordinates (from 0 to 1)
     vec2 uv = fragCoord/iResolution.xy;
 
-    float pixel_pheromons = clamp(texture(iChannel0, uv).g / 2.0, 0.0, 1.0);
+    float pixel_pheromons = clamp(texture(pheromons, uv).g / 2.0, 0.0, 1.0);
     pixel_pheromons = pow(abs(pixel_pheromons *2.0 - 1.0), COLOR_CONTRAST) * sign(pixel_pheromons - 0.5) / 2.0 + 0.5;
     pixel_pheromons = pow(pixel_pheromons, COLOR_CONTRAST);
-    float interest_mask = texture(iChannel1, uv).g;
-    vec3 feedback_color = texture(iChannel2, uv + (pixel_pheromons + 1.0) * FEEDBACK_OFFSET / iResolution.xy).rgb;
+    float interest_mask = texture(food, uv).g;
+    vec3 feedback_color = texture(feedback, uv + (pixel_pheromons + 1.0) * FEEDBACK_OFFSET / iResolution.xy).rgb;
     feedback_color -= FEEDBACK_DECAY;
 
 
     vec2 stream_direction = vec2(
-    	texture(iChannel0, uv + vec2(1.0, 0.0) / iResolution.xy).r - texture(iChannel0, uv - vec2(1.0, 0.0) / iResolution.xy).r,
-    	texture(iChannel0, uv + vec2(0.0, 1.0) / iResolution.xy).r - texture(iChannel0, uv - vec2(0.0, 1.0) / iResolution.xy).r
+    	texture(pheromons, uv + vec2(1.0, 0.0) / iResolution.xy).r - texture(pheromons, uv - vec2(1.0, 0.0) / iResolution.xy).r,
+    	texture(pheromons, uv + vec2(0.0, 1.0) / iResolution.xy).r - texture(pheromons, uv - vec2(0.0, 1.0) / iResolution.xy).r
 	);
 
     float direction_as_hue = atan(stream_direction.y, stream_direction.x) / (2.0 * PI);
@@ -44,7 +48,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 
     }
     if (SHOW_ANTS) {
-        col = mix(col, vec3(0.0, 0.0, 0.0), texture(iChannel0, uv).b * 0.1);
+        col = mix(col, vec3(0.0, 0.0, 0.0), texture(pheromons, uv).b * 0.1);
     }
     if (SHOW_FEEDBACK) {
         col = mix(col, feedback_color,interest_mask);
