@@ -1,162 +1,206 @@
 {
-    "bpm": 89,
-    "view": {
-        "width": 960,
-        "height": 640,
-        "target_fps": 60,
-        "dynamic": true,
-        "vsync": true,
-        "screenshot": false,
-        "screenshot_path": "output/",
-        "locked_speed": false,
-        "fullscreen": false
+  "bpm": 89.0,
+  "view": {
+    "width": 960,
+    "height": 640,
+    "fullscreen": false,
+    "target_fps": 60.0,
+    "dynamic": true,
+    "vsync": true,
+    "screenshot_path": "output/",
+    "screenshot": false,
+    "locked_speed": false
+  },
+  "server": {
+    "ip": "127.0.0.1",
+    "port": 3000,
+    "enable": false
+  },
+  "inputs": {
+    "InputImage": {
+      "type": "Video",
+      "path": "res/water.mp4",
+      "width": 960,
+      "height": 640,
+      "speed": {
+        "Fps": 50.0
+      }
+    }
+  },
+  "render_chain": [
+    {
+      "name": "Threshold",
+      "filter": "threshold",
+      "filter_mode_params": {
+        "Rectangle": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "inputs": {
+        "InputImage": {
+          "Linear": "InputImage"
+        }
+      },
+      "variables": {
+        "THRESHOLD_SLOPE": {
+          "Float": 0.1
+        },
+        "CHROMA_FACTORS": {
+          "Float3": [
+            -1.0,
+            1.0,
+            -1.0
+          ]
+        },
+        "MIRROR": {
+          "Bool": false
+        },
+        "THRESHOLD": {
+          "Float": 0.3941
+        },
+        "THRESHOLD_REVERSE": {
+          "Bool": false
+        },
+        "CHROMA": {
+          "Bool": false
+        }
+      },
+      "precision": "U8"
     },
-    "server": {
-        "ip": "127.0.0.1",
-        "port": 3000,
-        "enable": false
+    {
+      "name": "ThresholdedInput",
+      "filter": "multiply_images",
+      "filter_mode_params": {
+        "Rectangle": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "inputs": {
+        "InputImageA": {
+          "Linear": "InputImage"
+        },
+        "InputImageB": {
+          "Linear": "Threshold"
+        }
+      },
+      "variables": {},
+      "precision": "U8"
+    },
+    {
+      "name": "Blur1",
+      "filter": "blur",
+      "filter_mode_params": {
+        "Rectangle": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "inputs": {
+        "InputImage": {
+          "Mipmaps": "ThresholdedInput"
+        }
+      },
+      "variables": {
+        "dither": {
+          "Bool": true
+        }
+      },
+      "precision": "U8"
+    },
+    {
+      "name": "Blur2",
+      "filter": "blur",
+      "filter_mode_params": {
+        "Rectangle": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "inputs": {
+        "InputImage": {
+          "Mipmaps": "Blur1"
+        }
+      },
+      "variables": {
+        "dither": {
+          "Bool": true
+        }
+      },
+      "precision": "U8"
+    },
+    {
+      "name": "Blur3",
+      "filter": "blur",
+      "filter_mode_params": {
+        "Rectangle": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "inputs": {
+        "InputImage": {
+          "Mipmaps": "Blur2"
+        }
+      },
+      "variables": {
+        "dither": {
+          "Bool": true
+        }
+      },
+      "precision": "U8"
+    },
+    {
+      "name": "Compose",
+      "filter": "final_stage",
+      "filter_mode_params": {
+        "Rectangle": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "inputs": {
+        "iChannel1": {
+          "Linear": "Blur3"
+        },
+        "iChannel0": {
+          "Linear": "InputImage"
+        }
+      },
+      "variables": {},
+      "precision": "U8"
+    }
+  ],
+  "final_stage": {
+    "name": "Target",
+    "filter": "copy_input",
+    "filter_mode_params": {
+      "Rectangle": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ]
     },
     "inputs": {
-        "InputImage": {
-            "type": "Video",
-            "path": "res/water.mp4",
-            "width": 960,
-            "height": 640,
-            "speed": {
-                "Fps": 50
-            }
-        }
+      "iChannel0": {
+        "Linear": "Compose"
+      }
     },
-    "render_chain": [
-        {
-            "name": "Threshold",
-            "filter": "threshold",
-            "filter_mode_params": {
-                "Rectangle": [
-                    0.0,
-                    0.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "inputs": {
-                "iChannel0": {
-                    "Linear": "InputImage"
-                }
-            },
-            "variables": {},
-            "precision": "U8"
-        },
-        {
-            "name": "Blur1",
-            "filter": "blur",
-            "filter_mode_params": {
-                "Rectangle": [
-                    0.0,
-                    0.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "inputs": {
-                "iChannel0": {
-                    "Mipmaps": "Threshold"
-                }
-            },
-            "variables": {
-                "dither": {
-                    "Bool": true
-                }
-            },
-            "precision": "U8"
-        },
-        {
-            "name": "Blur2",
-            "filter": "blur",
-            "filter_mode_params": {
-                "Rectangle": [
-                    0.0,
-                    0.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "inputs": {
-                "iChannel0": {
-                    "Mipmaps": "Blur1"
-                }
-            },
-            "variables": {
-                "dither": {
-                    "Bool": true
-                }
-            },
-            "precision": "U8"
-        },
-        {
-            "name": "Blur3",
-            "filter": "blur",
-            "filter_mode_params": {
-                "Rectangle": [
-                    0.0,
-                    0.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "inputs": {
-                "iChannel0": {
-                    "Mipmaps": "Blur2"
-                }
-            },
-            "variables": {
-                "dither": {
-                    "Bool": true
-                }
-            },
-            "precision": "U8"
-        },
-        {
-            "name": "Compose",
-            "filter": "final_stage",
-            "filter_mode_params": {
-                "Rectangle": [
-                    0.0,
-                    0.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "inputs": {
-                "iChannel0": {
-                    "Linear": "InputImage"
-                },
-                "iChannel1": {
-                    "Linear": "Blur3"
-                }
-            },
-            "variables": {},
-            "precision": "U8",
-            "mipmapped": false
-        }
-    ],
-    "final_stage": {
-        "name": "Target",
-        "filter": "copy_input",
-        "filter_mode_params": {
-            "Rectangle": [
-                0.0,
-                0.0,
-                1.0,
-                1.0
-            ]
-        },
-        "inputs": {
-            "iChannel0": {
-                "Linear": "Compose"
-            }
-        },
-        "variables": {},
-        "precision": "U8"
-    }
+    "variables": {},
+    "precision": "U8"
+  }
 }

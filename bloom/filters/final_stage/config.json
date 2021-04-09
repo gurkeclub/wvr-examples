@@ -9,8 +9,7 @@
     },
     "inputs": [
         "iChannel0",
-        "iChannel1",
-        "iChannel2"
+        "iChannel1"
     ],
     "vertex_shader": [
         "std/default.vs.glsl"
