@@ -1,67 +1,208 @@
 {
-    "bpm": 120,
-    "view": {
-        "width": 960,
-        "height": 640,
-        "fullscreen": false,
-        "target_fps": 60,
-        "dynamic": true,
-        "vsync": true,
-        "screenshot_path": "output/",
-        "screenshot": false,
-        "locked_speed": false
+  "bpm": 89.0,
+  "view": {
+    "width": 1280,
+    "height": 720,
+    "fullscreen": false,
+    "target_fps": 60.0,
+    "dynamic": true,
+    "vsync": true,
+    "screenshot_path": "output/",
+    "screenshot": false,
+    "locked_speed": false
+  },
+  "server": {
+    "ip": "127.0.0.1",
+    "port": 3000,
+    "enable": false
+  },
+  "inputs": {
+    "Camera #1": {
+      "type": "Cam",
+      "path": "/dev/video0",
+      "width": 640,
+      "height": 480
+    }
+  },
+  "render_chain": [
+    {
+      "name": "Gain",
+      "filter": "multiply",
+      "filter_mode_params": {
+        "Rectangle": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "inputs": {
+        "InputImage": {
+          "Linear": "Camera #1"
+        }
+      },
+      "variables": {
+        "FACTOR": {
+          "Float": 2.018
+        }
+      },
+      "precision": "F32"
     },
-    "server": {
-        "ip": "127.0.0.1",
-        "port": 3000,
-        "enable": false
+    {
+      "name": "Strobo",
+      "filter": "flicker",
+      "filter_mode_params": {
+        "Rectangle": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "inputs": {
+        "iChannel0": {
+          "Linear": "Gain"
+        }
+      },
+      "variables": {
+        "BEAT_SYNC_NOM": {
+          "Int": 1
+        },
+        "BEAT_SYNC_MUL": {
+          "Int": 2
+        },
+        "BEAT_SYNC_DEN": {
+          "Int": 1
+        },
+        "BEAT_SYNC_DIV": {
+          "Int": 16
+        }
+      },
+      "precision": "F32"
+    },
+    {
+      "name": "Mix Strobo",
+      "filter": "mix_pictures",
+      "filter_mode_params": {
+        "Rectangle": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "inputs": {
+        "picture_b": {
+          "Linear": "Strobo"
+        },
+        "mix_mask": {
+          "Linear": "Dots"
+        },
+        "picture_a": {
+          "Linear": "Gain"
+        }
+      },
+      "variables": {
+        "USE_MASK": {
+          "Bool": false
+        },
+        "MIX": {
+          "Float": 0.4477
+        },
+        "FACTOR": {
+          "Float": 0.5
+        }
+      },
+      "precision": "F32"
+    },
+    {
+      "name": "Dots",
+      "filter": "dotprint",
+      "filter_mode_params": {
+        "Rectangle": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "inputs": {
+        "iChannel0": {
+          "Mipmaps": "Mix Strobo"
+        }
+      },
+      "variables": {
+        "BEAT_SYNC_NOM": {
+          "Int": 1
+        },
+        "BEAT_EFFECT": {
+          "Float": 0.2552
+        },
+        "DOT_RADIUS": {
+          "Float": 13.0
+        },
+        "MIRROR": {
+          "Bool": true
+        },
+        "BORDER_EFFECT": {
+          "Float": 0.0
+        },
+        "POSTERIZATION_LEVELS": {
+          "Float": 256.0
+        },
+        "BEAT_SYNC_DEN": {
+          "Int": 1
+        }
+      },
+      "precision": "F32"
+    },
+    {
+      "name": "Zoom",
+      "filter": "hyper zoom",
+      "filter_mode_params": {
+        "Rectangle": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "inputs": {
+        "iChannel0": {
+          "Linear": "Dots"
+        }
+      },
+      "variables": {
+        "MAGNITUDE": {
+          "Float": 0.1674
+        },
+        "BEAT_SYNC_MUL": {
+          "Int": 1
+        },
+        "BEAT_SYNC_DIV": {
+          "Int": 1
+        }
+      },
+      "precision": "U8"
+    }
+  ],
+  "final_stage": {
+    "name": "Target",
+    "filter": "copy_input",
+    "filter_mode_params": {
+      "Rectangle": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ]
     },
     "inputs": {
-        "Camera": {
-            "type": "Cam",
-            "path": "/dev/video0",
-            "width": 640,
-            "height": 480
-        }
+      "iChannel0": {
+        "Mipmaps": "Zoom"
+      }
     },
-    "render_chain": [
-        {
-            "name": "Effect",
-            "filter": "dotprint",
-            "filter_mode_params": {
-                "Rectangle": [
-                    0.0,
-                    0.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "inputs": {
-                "iChannel0": {
-                    "Mipmaps": "Camera"
-                }
-            },
-            "variables": {},
-            "precision": "U8"
-        }
-    ],
-    "final_stage": {
-        "name": "Target",
-        "filter": "copy_input",
-        "filter_mode_params": {
-            "Rectangle": [
-                0.0,
-                0.0,
-                1.0,
-                1.0
-            ]
-        },
-        "inputs": {
-            "iChannel0": {
-                "Linear": "Effect"
-            }
-        },
-        "variables": {},
-        "precision": "U8"
-    }
+    "variables": {},
+    "precision": "U8"
+  }
 }
