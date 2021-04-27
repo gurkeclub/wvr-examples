@@ -3,6 +3,7 @@ uniform float ANT_SIZE;
 uniform float ANT_EXPLORATION;
 uniform float ANT_GROUPING;
 uniform float ANT_REINFORCEMENT;
+uniform bool RESET;
 
 uniform sampler2D ants;
 uniform sampler2D pheromons;
@@ -15,11 +16,11 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     vec4 ant_info = texture(ants, uv).rgba;
     
     
-    if (iFrame == 0) {
+    if (iFrame == 0 || RESET) {
         ant_info = vec4(0.0);
         ant_info.xy = vec2(rand(uv), rand(uv + fract(uv *4.123) + 0.1));
     }
-    if (iFrame < 10) {
+    if (iFrame < 10 || RESET) {
         ant_info.w = (rand(uv) * 2.0 - 1.0) * PI;
     }
     

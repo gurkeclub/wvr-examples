@@ -1,8 +1,8 @@
 {
-  "bpm": 89.0,
+  "bpm": 124.0,
   "view": {
     "width": 960,
-    "height": 640,
+    "height": 540,
     "fullscreen": false,
     "target_fps": 60.0,
     "dynamic": true,
@@ -17,20 +17,49 @@
     "enable": false
   },
   "inputs": {
-    "InputImage": {
+    "Input Video": {
       "type": "Video",
-      "path": "res/water.mp4",
-      "width": 960,
-      "height": 640,
+      "path": "C:\\Users\\cfg\\AppData\\Local\\gurke\\wvr\\data\\projects\\wvr-examples\\bloom\\res\\water.mp4",
+      "width": 640,
+      "height": 480,
       "speed": {
-        "Fps": 50.0
+        "Fps": 25.0
       }
     }
   },
   "render_chain": [
     {
+      "name": "Input copy",
+      "filter": "generic/copy",
+      "filter_mode_params": {
+        "Rectangle": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "inputs": {
+        "iChannel0": {
+          "Linear": "Input Video"
+        }
+      },
+      "variables": {
+        "FLIP_VERTICAL": {
+          "Bool": false
+        },
+        "VERTICAL": {
+          "Bool": false
+        },
+        "FLIP_HORIZONTAL": {
+          "Bool": false
+        }
+      },
+      "precision": "U8"
+    },
+    {
       "name": "Threshold",
-      "filter": "threshold",
+      "filter": "generic/threshold",
       "filter_mode_params": {
         "Rectangle": [
           0.0,
@@ -41,12 +70,21 @@
       },
       "inputs": {
         "InputImage": {
-          "Linear": "InputImage"
+          "Linear": "Input copy"
         }
       },
       "variables": {
+        "THRESHOLD_REVERSE": {
+          "Bool": false
+        },
         "THRESHOLD_SLOPE": {
-          "Float": 0.1
+          "Float": 0.5076
+        },
+        "MIRROR": {
+          "Bool": false
+        },
+        "THRESHOLD": {
+          "Float": 0.5233
         },
         "CHROMA_FACTORS": {
           "Float3": [
@@ -55,15 +93,6 @@
             -1.0
           ]
         },
-        "MIRROR": {
-          "Bool": false
-        },
-        "THRESHOLD": {
-          "Float": 0.3941
-        },
-        "THRESHOLD_REVERSE": {
-          "Bool": false
-        },
         "CHROMA": {
           "Bool": false
         }
@@ -71,8 +100,8 @@
       "precision": "U8"
     },
     {
-      "name": "ThresholdedInput",
-      "filter": "multiply_images",
+      "name": "Thresholded Input",
+      "filter": "combine/multiply",
       "filter_mode_params": {
         "Rectangle": [
           0.0,
@@ -87,14 +116,20 @@
         },
         "InputImageB": {
           "Linear": "Threshold"
+        },
+        "inputImageA": {
+          "Linear": "Input copy"
+        },
+        "inputImageB": {
+          "Linear": "Threshold"
         }
       },
       "variables": {},
       "precision": "U8"
     },
     {
-      "name": "Blur1",
-      "filter": "blur",
+      "name": "Blur1_H",
+      "filter": "blur/directional",
       "filter_mode_params": {
         "Rectangle": [
           0.0,
@@ -105,19 +140,25 @@
       },
       "inputs": {
         "InputImage": {
-          "Mipmaps": "ThresholdedInput"
+          "Linear": "Thresholded Input"
         }
       },
       "variables": {
+        "VERTICAL": {
+          "Bool": false
+        },
+        "SIZE": {
+          "Float": 2.57
+        },
         "dither": {
           "Bool": true
         }
       },
-      "precision": "U8"
+      "precision": "F16"
     },
     {
-      "name": "Blur2",
-      "filter": "blur",
+      "name": "Blur1_V",
+      "filter": "blur/directional",
       "filter_mode_params": {
         "Rectangle": [
           0.0,
@@ -128,19 +169,25 @@
       },
       "inputs": {
         "InputImage": {
-          "Mipmaps": "Blur1"
+          "Linear": "Blur1_H"
         }
       },
       "variables": {
+        "VERTICAL": {
+          "Bool": true
+        },
+        "SIZE": {
+          "Float": 2.5
+        },
         "dither": {
           "Bool": true
         }
       },
-      "precision": "U8"
+      "precision": "F16"
     },
     {
-      "name": "Blur3",
-      "filter": "blur",
+      "name": "Blur2_H",
+      "filter": "blur/directional",
       "filter_mode_params": {
         "Rectangle": [
           0.0,
@@ -151,19 +198,54 @@
       },
       "inputs": {
         "InputImage": {
-          "Mipmaps": "Blur2"
+          "Linear": "Blur1_V"
         }
       },
       "variables": {
+        "VERTICAL": {
+          "Bool": false
+        },
+        "SIZE": {
+          "Float": 2.52
+        },
         "dither": {
           "Bool": true
         }
       },
-      "precision": "U8"
+      "precision": "F16"
+    },
+    {
+      "name": "Blur 2_V",
+      "filter": "blur/directional",
+      "filter_mode_params": {
+        "Rectangle": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "inputs": {
+        "iChannel0": {
+          "Linear": "Blur3"
+        },
+        "InputImage": {
+          "Linear": "Blur2_H"
+        }
+      },
+      "variables": {
+        "SIZE": {
+          "Float": 2.54
+        },
+        "VERTICAL": {
+          "Bool": true
+        }
+      },
+      "precision": "F16"
     },
     {
       "name": "Compose",
-      "filter": "final_stage",
+      "filter": "combine/add",
       "filter_mode_params": {
         "Rectangle": [
           0.0,
@@ -173,20 +255,45 @@
         ]
       },
       "inputs": {
-        "iChannel1": {
-          "Linear": "Blur3"
+        "inputImageA": {
+          "Linear": "Input copy"
         },
         "iChannel0": {
           "Linear": "InputImage"
+        },
+        "inputImageB": {
+          "Linear": "Blur 2_V"
+        },
+        "iChannel1": {
+          "Linear": "Blur2"
+        },
+        "mix_mask": {
+          "Linear": "Layer #0"
+        },
+        "picture_a": {
+          "Linear": "Blur 2_V"
+        },
+        "picture_b": {
+          "Linear": "Input copy"
         }
       },
-      "variables": {},
+      "variables": {
+        "ABSOLUTE": {
+          "Bool": true
+        },
+        "MIX": {
+          "Float": 0.0
+        },
+        "USE_MASK": {
+          "Bool": true
+        }
+      },
       "precision": "U8"
     }
   ],
   "final_stage": {
     "name": "Target",
-    "filter": "copy_input",
+    "filter": "generic/copy",
     "filter_mode_params": {
       "Rectangle": [
         0.0,
@@ -197,7 +304,7 @@
     },
     "inputs": {
       "iChannel0": {
-        "Linear": "Compose"
+        "Mipmaps": "Compose"
       }
     },
     "variables": {},

@@ -50,7 +50,7 @@
     ],
     "final_stage": {
         "name": "Target",
-        "filter": "copy_input",
+        "filter": "generic/copy",
         "filter_mode_params": {
             "Rectangle": [
                 0.0,

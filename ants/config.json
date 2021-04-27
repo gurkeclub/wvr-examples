@@ -1,8 +1,8 @@
 {
   "bpm": 89.0,
   "view": {
-    "width": 960,
-    "height": 540,
+    "width": 640,
+    "height": 640,
     "fullscreen": false,
     "target_fps": 60.0,
     "dynamic": false,
@@ -20,7 +20,7 @@
   "render_chain": [
     {
       "name": "Emit Food",
-      "filter": "dot_grid",
+      "filter": "generate/dots",
       "filter_mode_params": {
         "Rectangle": [
           0.0,
@@ -31,11 +31,11 @@
       },
       "inputs": {},
       "variables": {
-        "DOT_SIZE": {
-          "Float": 0.5
-        },
         "DOT_DENSITY": {
           "Float": 2.0
+        },
+        "DOT_SIZE": {
+          "Float": 0.5
         }
       },
       "precision": "F32"
@@ -55,28 +55,28 @@
         "ants": {
           "Linear": "Ants"
         },
-        "pheromons": {
-          "Linear": "Diffuse Pheromons"
-        },
         "food": {
           "Linear": "Emit Food"
+        },
+        "pheromons": {
+          "Linear": "Diffuse Pheromons"
         }
       },
       "variables": {
-        "ANT_GROUPING": {
-          "Float": 0.4261
+        "ANT_REINFORCEMENT": {
+          "Float": 0.9545
         },
         "ANT_EXPLORATION": {
           "Float": 0.2443
         },
-        "ANT_SIZE": {
-          "Float": 3.0
-        },
-        "ANT_REINFORCEMENT": {
-          "Float": 0.9545
-        },
         "PHEROMON_DECAY": {
           "Float": 0.04647
+        },
+        "ANT_GROUPING": {
+          "Float": 0.4261
+        },
+        "ANT_SIZE": {
+          "Float": 3.0
         }
       },
       "precision": "F32"
@@ -140,36 +140,53 @@
         ]
       },
       "inputs": {
-        "pheromons": {
-          "Linear": "Diffuse Pheromons"
-        },
         "food": {
           "Linear": "Emit Food"
+        },
+        "pheromons": {
+          "Linear": "Diffuse Pheromons"
         },
         "feedback": {
           "Linear": "Render"
         }
       },
       "variables": {
-        "FEEDBACK_DECAY": {
-          "Float": 0.082
+        "PALETTE_B": {
+          "Float3": [
+            0.497,
+            0.505,
+            0.511
+          ]
         },
         "SHOW_FEEDBACK": {
           "Bool": false
         },
-        "FEEDBACK_OFFSET": {
-          "Float2": [
-            0.0,
-            1.0
-          ]
-        },
         "COLOR_CONTRAST": {
           "Float": 1.0
+        },
+        "PALETTE_A": {
+          "Float3": [
+            0.5,
+            0.502,
+            0.502
+          ]
+        },
+        "SHOW_ANTS": {
+          "Bool": true
         },
         "PALETTE_C": {
           "Float3": [
             1.0,
             1.0,
+            1.0
+          ]
+        },
+        "FEEDBACK_DECAY": {
+          "Float": 0.082
+        },
+        "FEEDBACK_OFFSET": {
+          "Float2": [
+            0.0,
             1.0
           ]
         },
@@ -182,23 +199,6 @@
         },
         "SHOW_MASK": {
           "Bool": false
-        },
-        "PALETTE_B": {
-          "Float3": [
-            0.497,
-            0.505,
-            0.511
-          ]
-        },
-        "SHOW_ANTS": {
-          "Bool": true
-        },
-        "PALETTE_A": {
-          "Float3": [
-            0.5,
-            0.502,
-            0.502
-          ]
         }
       },
       "precision": "F32"
@@ -206,7 +206,7 @@
   ],
   "final_stage": {
     "name": "Image",
-    "filter": "copy_input",
+    "filter": "generic/copy",
     "filter_mode_params": {
       "Rectangle": [
         0.0,

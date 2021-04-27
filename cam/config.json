@@ -27,7 +27,7 @@
   "render_chain": [
     {
       "name": "Gain",
-      "filter": "multiply",
+      "filter": "generic/multiply",
       "filter_mode_params": {
         "Rectangle": [
           0.0,
@@ -49,75 +49,8 @@
       "precision": "F32"
     },
     {
-      "name": "Strobo",
-      "filter": "flicker",
-      "filter_mode_params": {
-        "Rectangle": [
-          0.0,
-          0.0,
-          1.0,
-          1.0
-        ]
-      },
-      "inputs": {
-        "iChannel0": {
-          "Linear": "Gain"
-        }
-      },
-      "variables": {
-        "BEAT_SYNC_NOM": {
-          "Int": 1
-        },
-        "BEAT_SYNC_MUL": {
-          "Int": 2
-        },
-        "BEAT_SYNC_DEN": {
-          "Int": 1
-        },
-        "BEAT_SYNC_DIV": {
-          "Int": 16
-        }
-      },
-      "precision": "F32"
-    },
-    {
-      "name": "Mix Strobo",
-      "filter": "mix_pictures",
-      "filter_mode_params": {
-        "Rectangle": [
-          0.0,
-          0.0,
-          1.0,
-          1.0
-        ]
-      },
-      "inputs": {
-        "picture_b": {
-          "Linear": "Strobo"
-        },
-        "mix_mask": {
-          "Linear": "Dots"
-        },
-        "picture_a": {
-          "Linear": "Gain"
-        }
-      },
-      "variables": {
-        "USE_MASK": {
-          "Bool": false
-        },
-        "MIX": {
-          "Float": 0.4477
-        },
-        "FACTOR": {
-          "Float": 0.5
-        }
-      },
-      "precision": "F32"
-    },
-    {
       "name": "Dots",
-      "filter": "dotprint",
+      "filter": "style/dotprint",
       "filter_mode_params": {
         "Rectangle": [
           0.0,
@@ -128,7 +61,7 @@
       },
       "inputs": {
         "iChannel0": {
-          "Mipmaps": "Mix Strobo"
+          "Mipmaps": "Gain"
         }
       },
       "variables": {
@@ -158,7 +91,7 @@
     },
     {
       "name": "Zoom",
-      "filter": "hyper zoom",
+      "filter": "zoom/hyper zoom",
       "filter_mode_params": {
         "Rectangle": [
           0.0,
@@ -188,7 +121,7 @@
   ],
   "final_stage": {
     "name": "Target",
-    "filter": "copy_input",
+    "filter": "generic/copy",
     "filter_mode_params": {
       "Rectangle": [
         0.0,
