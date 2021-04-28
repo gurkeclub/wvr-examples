@@ -45,15 +45,18 @@
         }
       },
       "variables": {
-        "FLIP_VERTICAL": {
-          "Bool": false
-        },
-        "VERTICAL": {
-          "Bool": false
-        },
-        "FLIP_HORIZONTAL": {
-          "Bool": false
-        }
+        "FLIP_VERTICAL": [
+          {
+            "Bool": false
+          },
+          "None"
+        ],
+        "FLIP_HORIZONTAL": [
+          {
+            "Bool": false
+          },
+          "None"
+        ]
       },
       "precision": "U8"
     },
@@ -74,28 +77,46 @@
         }
       },
       "variables": {
-        "THRESHOLD_REVERSE": {
-          "Bool": false
-        },
-        "THRESHOLD_SLOPE": {
-          "Float": 0.5076
-        },
-        "MIRROR": {
-          "Bool": false
-        },
-        "THRESHOLD": {
-          "Float": 0.5233
-        },
-        "CHROMA_FACTORS": {
-          "Float3": [
-            -1.0,
-            1.0,
-            -1.0
-          ]
-        },
-        "CHROMA": {
-          "Bool": false
-        }
+        "THRESHOLD_REVERSE": [
+          {
+            "Bool": false
+          },
+          "None"
+        ],
+        "THRESHOLD_SLOPE": [
+          {
+            "Float": 0.5076
+          },
+          "None"
+        ],
+        "MIRROR": [
+          {
+            "Bool": false
+          },
+          "None"
+        ],
+        "THRESHOLD": [
+          {
+            "Float": 0.5233
+          },
+          "None"
+        ],
+        "CHROMA_FACTORS": [
+          {
+            "Float3": [
+              -1.0,
+              1.0,
+              -1.0
+            ]
+          },
+          "None"
+        ],
+        "CHROMA": [
+          {
+            "Bool": false
+          },
+          "None"
+        ]
       },
       "precision": "U8"
     },
@@ -111,12 +132,6 @@
         ]
       },
       "inputs": {
-        "InputImageA": {
-          "Linear": "InputImage"
-        },
-        "InputImageB": {
-          "Linear": "Threshold"
-        },
         "inputImageA": {
           "Linear": "Input copy"
         },
@@ -144,15 +159,12 @@
         }
       },
       "variables": {
-        "VERTICAL": {
-          "Bool": false
-        },
-        "SIZE": {
-          "Float": 2.57
-        },
-        "dither": {
-          "Bool": true
-        }
+        "VERTICAL": [
+          {
+            "Bool": false
+          },
+          "None"
+        ]
       },
       "precision": "F16"
     },
@@ -173,15 +185,12 @@
         }
       },
       "variables": {
-        "VERTICAL": {
-          "Bool": true
-        },
-        "SIZE": {
-          "Float": 2.5
-        },
-        "dither": {
-          "Bool": true
-        }
+        "VERTICAL": [
+          {
+            "Bool": true
+          },
+          "None"
+        ]
       },
       "precision": "F16"
     },
@@ -202,15 +211,12 @@
         }
       },
       "variables": {
-        "VERTICAL": {
-          "Bool": false
-        },
-        "SIZE": {
-          "Float": 2.52
-        },
-        "dither": {
-          "Bool": true
-        }
+        "VERTICAL": [
+          {
+            "Bool": false
+          },
+          "None"
+        ]
       },
       "precision": "F16"
     },
@@ -226,20 +232,17 @@
         ]
       },
       "inputs": {
-        "iChannel0": {
-          "Linear": "Blur3"
-        },
         "InputImage": {
           "Linear": "Blur2_H"
         }
       },
       "variables": {
-        "SIZE": {
-          "Float": 2.54
-        },
-        "VERTICAL": {
-          "Bool": true
-        }
+        "VERTICAL": [
+          {
+            "Bool": true
+          },
+          "None"
+        ]
       },
       "precision": "F16"
     },
@@ -258,35 +261,29 @@
         "inputImageA": {
           "Linear": "Input copy"
         },
-        "iChannel0": {
-          "Linear": "InputImage"
-        },
         "inputImageB": {
           "Linear": "Blur 2_V"
-        },
-        "iChannel1": {
-          "Linear": "Blur2"
-        },
-        "mix_mask": {
-          "Linear": "Layer #0"
-        },
-        "picture_a": {
-          "Linear": "Blur 2_V"
-        },
-        "picture_b": {
-          "Linear": "Input copy"
         }
       },
       "variables": {
-        "ABSOLUTE": {
-          "Bool": true
-        },
-        "MIX": {
-          "Float": 0.0
-        },
-        "USE_MASK": {
-          "Bool": true
-        }
+        "ABSOLUTE": [
+          {
+            "Bool": true
+          },
+          "None"
+        ],
+        "MIX": [
+          {
+            "Float": 0.0
+          },
+          "None"
+        ],
+        "USE_MASK": [
+          {
+            "Bool": true
+          },
+          "None"
+        ]
       },
       "precision": "U8"
     }

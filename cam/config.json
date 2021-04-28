@@ -42,9 +42,12 @@
         }
       },
       "variables": {
-        "FACTOR": {
-          "Float": 2.018
-        }
+        "FACTOR": [
+          {
+            "Float": 2.018
+          },
+          "None"
+        ]
       },
       "precision": "F32"
     },
@@ -65,27 +68,48 @@
         }
       },
       "variables": {
-        "BEAT_SYNC_NOM": {
-          "Int": 1
-        },
-        "BEAT_EFFECT": {
-          "Float": 0.2552
-        },
-        "DOT_RADIUS": {
-          "Float": 13.0
-        },
-        "MIRROR": {
-          "Bool": true
-        },
-        "BORDER_EFFECT": {
-          "Float": 0.0
-        },
-        "POSTERIZATION_LEVELS": {
-          "Float": 256.0
-        },
-        "BEAT_SYNC_DEN": {
-          "Int": 1
-        }
+        "BEAT_SYNC_NOM": [
+          {
+            "Int": 1
+          },
+          "None"
+        ],
+        "BEAT_EFFECT": [
+          {
+            "Float": 0.2552
+          },
+          "None"
+        ],
+        "DOT_RADIUS": [
+          {
+            "Float": 13.0
+          },
+          "None"
+        ],
+        "MIRROR": [
+          {
+            "Bool": true
+          },
+          "None"
+        ],
+        "BORDER_EFFECT": [
+          {
+            "Float": 0.0
+          },
+          "None"
+        ],
+        "POSTERIZATION_LEVELS": [
+          {
+            "Float": 256.0
+          },
+          "None"
+        ],
+        "BEAT_SYNC_DEN": [
+          {
+            "Int": 1
+          },
+          "None"
+        ]
       },
       "precision": "F32"
     },
@@ -106,15 +130,24 @@
         }
       },
       "variables": {
-        "MAGNITUDE": {
-          "Float": 0.1674
-        },
-        "BEAT_SYNC_MUL": {
-          "Int": 1
-        },
-        "BEAT_SYNC_DIV": {
-          "Int": 1
-        }
+        "MAGNITUDE": [
+          {
+            "Float": 0.1674
+          },
+          "None"
+        ],
+        "BEAT_SYNC_MUL": [
+          {
+            "Int": 1
+          },
+          "None"
+        ],
+        "BEAT_SYNC_DIV": [
+          {
+            "Int": 1
+          },
+          "None"
+        ]
       },
       "precision": "U8"
     }
