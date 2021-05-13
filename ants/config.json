@@ -9,6 +9,7 @@
     "vsync": true,
     "screenshot_path": "output/",
     "screenshot": false,
+    "screenshot_frame_count": -1,
     "locked_speed": false
   },
   "server": {
@@ -31,15 +32,24 @@
       },
       "inputs": {},
       "variables": {
+        "DOT_SIZE": [
+          {
+            "Float": 0.5
+          },
+          "None"
+        ],
         "DOT_DENSITY": [
           {
             "Float": 2.0
           },
           "None"
         ],
-        "DOT_SIZE": [
+        "OFFSET": [
           {
-            "Float": 0.5
+            "Float2": [
+              -0.0,
+              0.0
+            ]
           },
           "None"
         ]
@@ -48,7 +58,7 @@
     },
     {
       "name": "Ants",
-      "filter": "ants",
+      "filter": "ants/ants",
       "filter_mode_params": {
         "Rectangle": [
           0.0,
@@ -58,44 +68,50 @@
         ]
       },
       "inputs": {
+        "pheromons": {
+          "Linear": "Diffuse Pheromons"
+        },
         "ants": {
           "Linear": "Ants"
         },
         "food": {
           "Linear": "Emit Food"
-        },
-        "pheromons": {
-          "Linear": "Diffuse Pheromons"
         }
       },
       "variables": {
-        "ANT_REINFORCEMENT": [
-          {
-            "Float": 0.9545
-          },
-          "None"
-        ],
         "ANT_EXPLORATION": [
           {
-            "Float": 0.2443
-          },
-          "None"
-        ],
-        "PHEROMON_DECAY": [
-          {
-            "Float": 0.04647
+            "Float": 0.2037
           },
           "None"
         ],
         "ANT_GROUPING": [
           {
-            "Float": 0.4261
+            "Float": 0.3951
+          },
+          "None"
+        ],
+        "RESET": [
+          {
+            "Bool": false
           },
           "None"
         ],
         "ANT_SIZE": [
           {
-            "Float": 3.0
+            "Float": 7.0
+          },
+          "None"
+        ],
+        "ANT_REINFORCEMENT": [
+          {
+            "Float": 0.0
+          },
+          "None"
+        ],
+        "PHEROMON_DECAY": [
+          {
+            "Float": 0.00997
           },
           "None"
         ]
@@ -104,9 +120,9 @@
     },
     {
       "name": "Emit Pheromons",
-      "filter": "emit_pheromons",
+      "filter": "ants/emit_pheromons",
       "filter_mode_params": {
-        "Particles": 10000
+        "Particles": 9998
       },
       "inputs": {
         "ants": {
@@ -116,7 +132,7 @@
       "variables": {
         "ANT_SIZE": [
           {
-            "Float": 3.0
+            "Float": 7.0
           },
           "None"
         ]
@@ -125,7 +141,7 @@
     },
     {
       "name": "Diffuse Pheromons",
-      "filter": "diffuse_pheromon",
+      "filter": "ants/diffuse_pheromon",
       "filter_mode_params": {
         "Rectangle": [
           0.0,
@@ -135,23 +151,23 @@
         ]
       },
       "inputs": {
-        "pheromons": {
-          "Linear": "Diffuse Pheromons"
-        },
         "emitted_pheromons": {
           "Linear": "Emit Pheromons"
+        },
+        "pheromons": {
+          "Linear": "Diffuse Pheromons"
         }
       },
       "variables": {
         "INTEGRATE_DECAY": [
           {
-            "Float": 0.5051
+            "Float": 0.954
           },
           "None"
         ],
         "DIFFUSE_DECAY": [
           {
-            "Float": 0.00521
+            "Float": 0.00803
           },
           "None"
         ]
@@ -160,7 +176,7 @@
     },
     {
       "name": "Render",
-      "filter": "render",
+      "filter": "ants/render",
       "filter_mode_params": {
         "Rectangle": [
           0.0,
@@ -173,49 +189,33 @@
         "food": {
           "Linear": "Emit Food"
         },
-        "pheromons": {
-          "Linear": "Diffuse Pheromons"
-        },
         "feedback": {
           "Linear": "Render"
+        },
+        "pheromons": {
+          "Linear": "Diffuse Pheromons"
         }
       },
       "variables": {
-        "PALETTE_B": [
-          {
-            "Float3": [
-              0.497,
-              0.505,
-              0.511
-            ]
-          },
-          "None"
-        ],
-        "SHOW_FEEDBACK": [
-          {
-            "Bool": false
-          },
-          "None"
-        ],
         "COLOR_CONTRAST": [
           {
-            "Float": 1.0
+            "Float": 1.0001
           },
           "None"
         ],
-        "PALETTE_A": [
-          {
-            "Float3": [
-              0.5,
-              0.502,
-              0.502
-            ]
-          },
-          "None"
-        ],
-        "SHOW_ANTS": [
+        "SHOW_MASK": [
           {
             "Bool": false
+          },
+          "None"
+        ],
+        "PALETTE_D": [
+          {
+            "Float3": [
+              0.0,
+              0.1,
+              0.2
+            ]
           },
           "None"
         ],
@@ -229,12 +229,6 @@
           },
           "None"
         ],
-        "FEEDBACK_DECAY": [
-          {
-            "Float": 0.082
-          },
-          "None"
-        ],
         "FEEDBACK_OFFSET": [
           {
             "Float2": [
@@ -244,19 +238,41 @@
           },
           "None"
         ],
-        "PALETTE_D": [
+        "PALETTE_A": [
           {
             "Float3": [
-              0.7819,
-              0.331,
-              0.4656
+              0.5,
+              0.5,
+              0.5
             ]
           },
           "None"
         ],
-        "SHOW_MASK": [
+        "SHOW_ANTS": [
           {
             "Bool": false
+          },
+          "None"
+        ],
+        "SHOW_FEEDBACK": [
+          {
+            "Bool": false
+          },
+          "None"
+        ],
+        "PALETTE_B": [
+          {
+            "Float3": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "None"
+        ],
+        "FEEDBACK_DECAY": [
+          {
+            "Float": 0.082
           },
           "None"
         ]
@@ -277,7 +293,7 @@
     },
     "inputs": {
       "iChannel0": {
-        "Linear": "Render"
+        "Mipmaps": "Render"
       }
     },
     "variables": {},
