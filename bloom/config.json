@@ -8,6 +8,7 @@
     "dynamic": true,
     "vsync": true,
     "screenshot_path": "output/",
+    "screenshot_frame_count": -1,
     "screenshot": false,
     "locked_speed": false
   },
@@ -77,15 +78,15 @@
         }
       },
       "variables": {
-        "THRESHOLD_REVERSE": [
+        "THRESHOLD_SLOPE": [
           {
-            "Bool": false
+            "Float": 0.0
           },
           "None"
         ],
-        "THRESHOLD_SLOPE": [
+        "CHROMA": [
           {
-            "Float": 0.5076
+            "Bool": false
           },
           "None"
         ],
@@ -95,9 +96,15 @@
           },
           "None"
         ],
+        "THRESHOLD_REVERSE": [
+          {
+            "Bool": false
+          },
+          "None"
+        ],
         "THRESHOLD": [
           {
-            "Float": 0.5233
+            "Float": 0.9
           },
           "None"
         ],
@@ -108,12 +115,6 @@
               1.0,
               -1.0
             ]
-          },
-          "None"
-        ],
-        "CHROMA": [
-          {
-            "Bool": false
           },
           "None"
         ]
@@ -258,14 +259,20 @@
         ]
       },
       "inputs": {
-        "inputImageA": {
-          "Linear": "Input copy"
-        },
         "inputImageB": {
           "Linear": "Blur 2_V"
+        },
+        "inputImageA": {
+          "Linear": "Input copy"
         }
       },
       "variables": {
+        "USE_MASK": [
+          {
+            "Bool": true
+          },
+          "None"
+        ],
         "ABSOLUTE": [
           {
             "Bool": true
@@ -275,12 +282,6 @@
         "MIX": [
           {
             "Float": 0.0
-          },
-          "None"
-        ],
-        "USE_MASK": [
-          {
-            "Bool": true
           },
           "None"
         ]

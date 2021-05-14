@@ -9,6 +9,7 @@
         "locked_speed": false,
         "target_fps": 60,
         "screenshot_path": "output/",
+        "screenshot_frame_count": -1,
         "fullscreen": false
     },
     "server": {

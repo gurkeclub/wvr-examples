@@ -8,6 +8,7 @@
         "dynamic": true,
         "vsync": true,
         "screenshot_path": "output/",
+        "screenshot_frame_count": -1,
         "screenshot": false,
         "locked_speed": false
     },

@@ -9,6 +9,7 @@
         "vsync": true,
         "screenshot": false,
         "screenshot_path": "output/",
+        "screenshot_frame_count": -1,
         "locked_speed": false
     },
     "server": {
