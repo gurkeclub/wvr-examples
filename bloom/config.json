@@ -8,8 +8,8 @@
     "dynamic": true,
     "vsync": true,
     "screenshot_path": "output/",
-    "screenshot_frame_count": -1,
     "screenshot": false,
+    "screenshot_frame_count": -1,
     "locked_speed": false
   },
   "server": {
@@ -20,11 +20,11 @@
   "inputs": {
     "Input Video": {
       "type": "Video",
-      "path": "C:\\Users\\cfg\\AppData\\Local\\gurke\\wvr\\data\\projects\\wvr-examples\\bloom\\res\\water.mp4",
+      "path": "res/water.mp4",
       "width": 640,
       "height": 480,
       "speed": {
-        "Fps": 25.0
+        "Fps": 50.0
       }
     }
   },
@@ -46,13 +46,13 @@
         }
       },
       "variables": {
-        "FLIP_VERTICAL": [
+        "FLIP_HORIZONTAL": [
           {
             "Bool": false
           },
           "None"
         ],
-        "FLIP_HORIZONTAL": [
+        "FLIP_VERTICAL": [
           {
             "Bool": false
           },
@@ -78,33 +78,15 @@
         }
       },
       "variables": {
-        "THRESHOLD_SLOPE": [
-          {
-            "Float": 0.0
-          },
-          "None"
-        ],
-        "CHROMA": [
-          {
-            "Bool": false
-          },
-          "None"
-        ],
-        "MIRROR": [
-          {
-            "Bool": false
-          },
-          "None"
-        ],
         "THRESHOLD_REVERSE": [
           {
             "Bool": false
           },
           "None"
         ],
-        "THRESHOLD": [
+        "CHROMA": [
           {
-            "Float": 0.9
+            "Bool": false
           },
           "None"
         ],
@@ -115,6 +97,24 @@
               1.0,
               -1.0
             ]
+          },
+          "None"
+        ],
+        "MIRROR": [
+          {
+            "Bool": false
+          },
+          "None"
+        ],
+        "THRESHOLD_SLOPE": [
+          {
+            "Float": 0.0
+          },
+          "None"
+        ],
+        "THRESHOLD": [
+          {
+            "Float": 0.9
           },
           "None"
         ]
@@ -167,7 +167,7 @@
           "None"
         ]
       },
-      "precision": "F16"
+      "precision": "U8"
     },
     {
       "name": "Blur1_V",
@@ -193,7 +193,7 @@
           "None"
         ]
       },
-      "precision": "F16"
+      "precision": "U8"
     },
     {
       "name": "Blur2_H",
@@ -219,7 +219,7 @@
           "None"
         ]
       },
-      "precision": "F16"
+      "precision": "U8"
     },
     {
       "name": "Blur 2_V",
@@ -245,7 +245,7 @@
           "None"
         ]
       },
-      "precision": "F16"
+      "precision": "U8"
     },
     {
       "name": "Compose",
@@ -259,20 +259,14 @@
         ]
       },
       "inputs": {
-        "inputImageB": {
-          "Linear": "Blur 2_V"
-        },
         "inputImageA": {
           "Linear": "Input copy"
+        },
+        "inputImageB": {
+          "Linear": "Blur 2_V"
         }
       },
       "variables": {
-        "USE_MASK": [
-          {
-            "Bool": true
-          },
-          "None"
-        ],
         "ABSOLUTE": [
           {
             "Bool": true
@@ -282,6 +276,12 @@
         "MIX": [
           {
             "Float": 0.0
+          },
+          "None"
+        ],
+        "USE_MASK": [
+          {
+            "Bool": true
           },
           "None"
         ]
